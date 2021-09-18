@@ -2,7 +2,7 @@ WIP
 TO DO Basic:
 Create Auto Clicker (Complete),
 Simple GUI (Complete),
-2 Buttons - Start and Stop (Complete - Lack functionality),
+Working Button - start and stop (Complete),
 Input time between clicks (seconds),
 Allow for hotkey to start/pause auto clicker (even when tabbed out),
 REQUIRES KNOWLEDGE OF MULTITHREADING
