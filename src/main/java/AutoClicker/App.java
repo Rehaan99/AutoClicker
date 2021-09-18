@@ -9,6 +9,5 @@ public class App {
                GUI myGUI =  new GUI();
                Model myModel = new Model();
                Controller myController = new Controller(myModel, myGUI);
-               myController.run();
     }
 }
