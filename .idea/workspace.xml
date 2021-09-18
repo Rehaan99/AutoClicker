@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Added Multithreading">
+    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Added AutoClicking function and Basic GUI with two buttons.">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_35__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_35__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_36__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_36__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/Model.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/View/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/View/GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,9 +24,6 @@
         <option value="Class" />
       </list>
     </option>
-  </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="github/master" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -54,6 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RecentsManager">
@@ -143,21 +144,7 @@
       <option name="project" value="LOCAL" />
       <updated>1631819818958</updated>
     </task>
-    <task id="LOCAL-00007" summary="Followed MVC pattern (May need to move Action Listener from Controller to View?) Loosely Coupled.">
-      <created>1631957848195</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1631957848195</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Added Multithreading">
-      <created>1631992601581</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1631992601581</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,8 +163,6 @@
     <MESSAGE value="Created Project" />
     <MESSAGE value="Changes to pom and gitignore" />
     <MESSAGE value="Added README.md, changed pom and gitignore" />
-    <MESSAGE value="Followed MVC pattern (May need to move Action Listener from Controller to View?) Loosely Coupled." />
-    <MESSAGE value="Added Multithreading" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Multithreading" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added README.md, changed pom and gitignore" />
   </component>
 </project>
