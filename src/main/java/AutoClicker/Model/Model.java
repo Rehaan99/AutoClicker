@@ -6,9 +6,11 @@ import java.awt.event.InputEvent;
 public class Model implements Runnable{
 
     private boolean isClicking = false;
+    private int interval;
 
-    public void setIsClicking(boolean isClicking) {
+    public void setIsClicking(boolean isClicking, int interval) {
         this.isClicking = isClicking;
+        this.interval =interval;
     }
 
     @Override
@@ -33,10 +35,10 @@ public class Model implements Runnable{
 
     public void click() throws AWTException, InterruptedException {
         Robot bot = new Robot();
-        Thread.sleep(1000);
+        Thread.sleep(interval-100);
         System.out.println("Click");
         bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        Thread.sleep(400);
+        Thread.sleep(100);
         bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
     }
