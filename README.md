@@ -1,11 +1,3 @@
-WIP
-TO DO Basic:
-Create Auto Clicker (Complete),
-Simple GUI (Complete),
-Working Button - start and stop (Complete),
+Input auto click speed in milliseconds (1000ms = 1s). With a max interval of 5 minutes between clicks.
 
-Input time between clicks (seconds),
-Variable clicking interval
-
-Allow for hotkey to start/pause auto clicker (even when tabbed out) requires https://github.com/kwhat/jnativehook,
-change hotkey for start/stop AC.
+Press F1 to start AutoClicking, F2 to Stop (Currently hard coded), press enter after typing interval to start clicking.
