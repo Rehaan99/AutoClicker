@@ -22,7 +22,7 @@ public class Model implements Runnable{
         }
     }
 
-    public void buttonClickEvent() throws InterruptedException {;
+    public void buttonClickEvent() throws InterruptedException {
         while (isClicking) {
             try {
                 click();

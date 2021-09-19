@@ -1,10 +1,9 @@
 package AutoClicker.View;
 
+import org.jnativehook.keyboard.NativeKeyListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.text.NumberFormat;
 
 public class GUI {
 
@@ -36,4 +35,7 @@ public class GUI {
         return buttonAutoClicker;
     }
 
+    public void nativeKeyPressed(NativeKeyListener nativeKeyListener) {
+
+    }
 }

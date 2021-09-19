@@ -2,9 +2,11 @@ package AutoClicker.Controller;
 
 import AutoClicker.Model.Model;
 import AutoClicker.View.GUI;
-
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.ExecutorService;
@@ -17,7 +19,7 @@ public class Controller {
     private ExecutorService service = Executors.newFixedThreadPool(1);
     private final JButton button;
     private final JTextField intervalTextField;
-    public Controller(Model model, GUI gui) {
+    public Controller(Model model, GUI gui) throws NativeHookException {
         this.model = model;
         button = gui.getButton();
         intervalTextField =gui.getIntervalTextField();
@@ -44,11 +46,26 @@ public class Controller {
             }
         });
         button.addActionListener(e -> clickConditions());
-        button.getInputMap().put(KeyStroke.getKeyStroke("F1"), "AutoClick");
-        button.getActionMap().put("AutoClick", new AbstractAction() {
+        GlobalScreen.registerNativeHook();
+        GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                clickConditions();
+            public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
+
+            }
+            @Override
+            public void nativeKeyPressed(NativeKeyEvent e) {
+                if (e.getKeyCode() ==NativeKeyEvent.VC_F1){
+                    isClicking = false;
+                    clickConditions();
+                }
+                else if (e.getKeyCode() ==NativeKeyEvent.VC_F2){
+                    isClicking = true;
+                    clickConditions();
+                }
+            }
+            @Override
+            public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
+
             }
         });
     }

@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Now stops and starts reliably">
+    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Version update">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/java.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/Model.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/View/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/View/GUI.java" afterDir="false" />
@@ -51,6 +55,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/jnativehook" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
@@ -155,7 +163,28 @@
       <option name="project" value="LOCAL" />
       <updated>1632057435812</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Variable time between clicks implemented">
+      <created>1632062236947</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1632062236947</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Ignore .idea">
+      <created>1632062325954</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1632062325954</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Version update">
+      <created>1632062422432</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1632062422432</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,6 +205,9 @@
     <MESSAGE value="Added README.md, changed pom and gitignore" />
     <MESSAGE value="Code reformatted and redundancies removed." />
     <MESSAGE value="Now stops and starts reliably" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now stops and starts reliably" />
+    <MESSAGE value="Variable time between clicks implemented" />
+    <MESSAGE value="Ignore .idea" />
+    <MESSAGE value="Version update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version update" />
   </component>
 </project>
