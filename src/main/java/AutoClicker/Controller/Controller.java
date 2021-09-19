@@ -12,16 +12,13 @@ public class Controller {
 
     private final Model model;
     public static boolean isClicking = false;
-    private final ExecutorService service = Executors.newFixedThreadPool(1);
+    private ExecutorService service = Executors.newFixedThreadPool(1);
     private final JButton button;
 
     public Controller(Model model, GUI gui) {
         this.model = model;
         button = gui.getButton();
-        button.addActionListener(e -> {
-            clickConditions();
-        });
-
+        button.addActionListener(e -> clickConditions());
         button.getInputMap().put(KeyStroke.getKeyStroke("F1"), "AutoClick");
         button.getActionMap().put("AutoClick", new AbstractAction() {
             @Override
@@ -29,17 +26,18 @@ public class Controller {
                 clickConditions();
             }
         });
-
     }
 
     public void clickConditions() {
         isClicking = !isClicking;
         model.setIsClicking(isClicking);
-        service.execute(model);
         if (isClicking) {
-            button.setText("Stop AutoClicker");
+            button.setText("Stop Auto Clicker");
+            service.execute(model);
         } else {
-            button.setText("Start AutoClicker");
+            button.setText("Start Auto Clicker");
+            service.shutdownNow();
+            service = Executors.newFixedThreadPool(1);
         }
     }
 
