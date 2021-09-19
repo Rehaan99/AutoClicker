@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="AutoClicker:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Version update">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/java.xml" afterDir="false" />
+    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Added JNativeHook Library">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/AutoClicker_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/View/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/View/GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,9 +59,9 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/jnativehook" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
@@ -184,7 +187,28 @@
       <option name="project" value="LOCAL" />
       <updated>1632062422432</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Implemented JNativeHook for hotkeys.">
+      <created>1632069905141</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1632069905141</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Details usage">
+      <created>1632069921314</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1632069921314</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added JNativeHook Library">
+      <created>1632069933052</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1632069933052</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,6 +232,9 @@
     <MESSAGE value="Variable time between clicks implemented" />
     <MESSAGE value="Ignore .idea" />
     <MESSAGE value="Version update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version update" />
+    <MESSAGE value="Implemented JNativeHook for hotkeys." />
+    <MESSAGE value="Details usage" />
+    <MESSAGE value="Added JNativeHook Library" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added JNativeHook Library" />
   </component>
 </project>

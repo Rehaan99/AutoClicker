@@ -95,9 +95,6 @@ public class Controller {
             integer = 300000;
         }
         intervalTextField.setText(String.valueOf(integer));
-        if (integer < 100){
-            integer = 100;
-        }
         return integer;
     }
 

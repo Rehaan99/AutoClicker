@@ -1,7 +1,5 @@
 package AutoClicker.View;
 
-import org.jnativehook.keyboard.NativeKeyListener;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +9,7 @@ public class GUI {
     private final JTextField intervalTextField = new JTextField();
     public GUI() {
         JPanel panel = new JPanel();
-        intervalTextField.setText("0");
+        intervalTextField.setText("1000");
         JLabel intervalLabel = new JLabel("Enter Clicking interval in ms (1000ms = 1s)");
         panel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
         panel.setLayout(new GridLayout(0, 1));
@@ -33,9 +31,5 @@ public class GUI {
 
     public JButton getButton() {
         return buttonAutoClicker;
-    }
-
-    public void nativeKeyPressed(NativeKeyListener nativeKeyListener) {
-
     }
 }
