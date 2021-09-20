@@ -3,6 +3,7 @@ Java mini project with a basic GUI, makes use of external libraries with Maven d
 [USAGE]
 
 Auto Clicker:
+
 Input auto click speed in milliseconds (1000ms = 1s). With a max interval of 5 minutes between clicks.
 
 Press F1 to start AutoClicking, F2 to Stop (reads keys out of focus), or press enter after typing interval to start clicking.
