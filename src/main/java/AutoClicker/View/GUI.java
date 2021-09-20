@@ -10,13 +10,14 @@ public class GUI {
     private final JTextField keyPressTextField = new JTextField();
     private final JTextField intervalKPTextField = new JTextField();
     private final JButton KPButton = new JButton("Start Auto Button");
+
     public GUI() {
         JPanel panel = new JPanel();
         intervalACTextField.setText("1000");
         intervalKPTextField.setText("1000");
         JLabel intervalLabel = new JLabel("Auto Clicker:");
         JLabel keyPressLabel = new JLabel("Auto Button:");
-
+        KPButton.setEnabled(false);
         panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         panel.setLayout(new GridLayout(0, 4));
 
@@ -48,18 +49,16 @@ public class GUI {
     public JTextField getKeyPressTextField(){
         return keyPressTextField;
     }
-
     public JTextField getIntervalKPTextField(){
         return intervalKPTextField;
     }
-
     public JTextField getIntervalACTextField(){
         return intervalACTextField;
     }
     public JButton getKPButton(){
         return KPButton;
     }
-    public JButton getACButton() {
+    public JButton getACButton(){
         return buttonAutoClicker;
     }
 }

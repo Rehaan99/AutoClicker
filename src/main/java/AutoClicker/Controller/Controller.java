@@ -7,10 +7,8 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.ExecutorService;
@@ -28,45 +26,56 @@ public class Controller {
     private final JButton KPButton;
     private final JTextField intervalKPTextField;
     private final JTextField keyPressTextField;
-
+    private ExecutorService service = Executors.newFixedThreadPool(2);
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
         this.keyPress = keyPress;
         ACButton = gui.getACButton();
-        intervalACTextField =gui.getIntervalACTextField();
-
+        intervalACTextField = gui.getIntervalACTextField();
         intervalKPTextField = gui.getIntervalKPTextField();
         keyPressTextField = gui.getKeyPressTextField();
         KPButton = gui.getKPButton();
         keyPresser();
         autoClicker();
     }
-    public void keyPresser (){
-        KPButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                keyPressConditions();
-            }
-        });
-        keyPressTextField.addKeyListener(new KeyListener() {
 
+    public void keyPresser() {
+        KPButton.addActionListener(e -> keyPressConditions());
+        intervalKPTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                    if (keyPressTextField.getText().length() > 0) {
-                            keyPressTextField.setText("");
-                    }
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
             }
             @Override
             public void keyPressed(KeyEvent e) {}
             @Override
             public void keyReleased(KeyEvent e) {}
         });
+        keyPressTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                KPButton.setEnabled(true);
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    KPButton.setEnabled(false);
+                }else if (keyPressTextField.getText().length() > 0) {
+                    keyPressTextField.setText("");
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
     }
-    public void keyPressConditions(){
-        ExecutorService service = Executors.newFixedThreadPool(1);
+
+    public void keyPressConditions() {
         isPressing = !isPressing;
-        keyPress.setIsPressing(isPressing,getInterval(intervalKPTextField));
+        keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField));
         keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
         if (isPressing) {
             KPButton.setText("Stop Key Press");
@@ -78,52 +87,60 @@ public class Controller {
             intervalKPTextField.setFocusable(true);
             keyPressTextField.setFocusable(true);
             service.shutdownNow();
+            service = Executors.newFixedThreadPool(2);
         }
     }
-    public void autoClicker() throws NativeHookException {
-    intervalACTextField.addKeyListener(new KeyListener() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-            char c = e.getKeyChar();
-            if (!Character.isDigit(c)){
-                e.consume();
-            }
-        }
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                intervalACTextField.setFocusable(false);
-                clickConditions();
-            }
-        }
-        @Override
-        public void keyReleased(KeyEvent e) {}
-    });
-    ACButton.addActionListener(e -> clickConditions());
-    GlobalScreen.registerNativeHook();
-    GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
-        @Override
-        public void nativeKeyPressed(NativeKeyEvent e) {
-            if (e.getKeyCode() ==NativeKeyEvent.VC_F1){
-                isClicking = false;
-                clickConditions();
-            }
-            else if (e.getKeyCode() ==NativeKeyEvent.VC_F2){
-                isClicking = true;
-                clickConditions();
-            }
-        }
-        @Override
-        public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {}
-        @Override
-        public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {}
-    });
-}
 
+    public void autoClicker() throws NativeHookException {
+        intervalACTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    intervalACTextField.setFocusable(false);
+                    clickConditions();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        ACButton.addActionListener(e -> clickConditions());
+        GlobalScreen.registerNativeHook();
+        GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
+            @Override
+            public void nativeKeyPressed(NativeKeyEvent e) {
+                if (e.getKeyCode() == NativeKeyEvent.VC_F1) {
+                    isClicking = false;
+                    clickConditions();
+                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2) {
+                    isClicking = true;
+                    clickConditions();
+                }
+            }
+
+            @Override
+            public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
+            }
+
+            @Override
+            public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
+            }
+        });
+    }
     public void clickConditions() {
-        ExecutorService service = Executors.newFixedThreadPool(1);
+
         isClicking = !isClicking;
-        autoClick.setIsClicking(isClicking,getInterval(intervalACTextField));
+        autoClick.setIsClicking(isClicking, getInterval(intervalACTextField));
+
         if (isClicking) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
@@ -132,17 +149,22 @@ public class Controller {
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
             service.shutdownNow();
+            service = Executors.newFixedThreadPool(2);
         }
     }
-    public int getInterval(JTextField field){
+
+    public int getInterval(JTextField field) {
         int integer;
-        try{
+        try {
             integer = Integer.parseInt(field.getText());
-        }catch (NumberFormatException ex){
-            integer =  300000;
-        }
-        if (integer > 300000){
+        } catch (NumberFormatException ex) {
             integer = 300000;
+        }
+        if (integer > 300000) {
+            integer = 300000;
+        }
+        else if (integer < 100){
+            integer = 100;
         }
         field.setText(String.valueOf(integer));
         return integer;

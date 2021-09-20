@@ -26,9 +26,10 @@ public class AutoClick implements Runnable{
 
     private void click() throws AWTException, InterruptedException {
         Robot bot = new Robot();
+
         Thread.sleep(interval);
-        bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 
 }

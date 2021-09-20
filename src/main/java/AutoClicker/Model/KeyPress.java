@@ -1,7 +1,6 @@
 package AutoClicker.Model;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
 
 public class KeyPress  implements  Runnable{
 
