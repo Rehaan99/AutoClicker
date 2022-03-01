@@ -12,9 +12,11 @@ public class KeyPress  implements  Runnable{
         this.isPressing = isPressing;
         this.interval =interval;
     }
+
     public void setKeyCode(int keyCode){
         this.keyCode = keyCode;
     }
+
     @Override
     public void run() {
         while (isPressing) {
@@ -27,7 +29,9 @@ public class KeyPress  implements  Runnable{
     }
     public void press() throws InterruptedException, AWTException {
         Robot bot = new Robot();
-        Thread.sleep(interval);
-        bot.keyPress(keyCode);
+        while (isPressing) {
+            Thread.sleep(interval);
+            bot.keyPress(keyCode);
+        }
     }
 }
