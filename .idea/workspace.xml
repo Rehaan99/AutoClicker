@@ -9,7 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Added auto key presser">
+    <list default="true" id="eef4208d-3282-4d50-96db-38de3f971b8b" name="Changes" comment="Improvements to multithreaded performance">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_35_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_35__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_36_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_09_2021_10_36__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/AutoClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AutoClicker/Model/AutoClick.java" afterDir="false" />
@@ -221,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632082981062</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Improvements to multithreaded performance">
+      <created>1632156377055</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1632156377055</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -250,6 +261,7 @@
     <MESSAGE value="Added JNativeHook Library" />
     <MESSAGE value="Clean up" />
     <MESSAGE value="Added auto key presser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added auto key presser" />
+    <MESSAGE value="Improvements to multithreaded performance" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improvements to multithreaded performance" />
   </component>
 </project>

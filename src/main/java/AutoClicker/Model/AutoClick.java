@@ -16,20 +16,21 @@ public class AutoClick implements Runnable{
     @Override
     public void run() {
         while (isClicking) {
-        try {
+            try {
             click();
-        } catch (AWTException | InterruptedException ex) {
+                } catch (AWTException | InterruptedException ex) {
             ex.printStackTrace();
+            }
         }
-    }
     }
 
     private void click() throws AWTException, InterruptedException {
         Robot bot = new Robot();
-
-        Thread.sleep(interval);
+        while (isClicking) {
+            Thread.sleep(interval);// After interval press and release on the mouse left click.
             bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        }
     }
 
 }

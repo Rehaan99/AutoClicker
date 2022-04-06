@@ -27,6 +27,7 @@ public class Controller {
     private final JTextField intervalKPTextField;
     private final JTextField keyPressTextField;
     private ExecutorService service = Executors.newFixedThreadPool(2);
+
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
         this.keyPress = keyPress;
@@ -70,9 +71,7 @@ public class Controller {
             public void keyReleased(KeyEvent e) {
             }
         });
-
     }
-
     public void keyPressConditions() {
         isPressing = !isPressing;
         keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField));
@@ -83,10 +82,10 @@ public class Controller {
             keyPressTextField.setFocusable(false);
             service.execute(keyPress);
         } else {
+            service.shutdownNow();
             KPButton.setText("Start Key Press");
             intervalKPTextField.setFocusable(true);
             keyPressTextField.setFocusable(true);
-            service.shutdownNow();
             service = Executors.newFixedThreadPool(2);
         }
     }
@@ -146,11 +145,12 @@ public class Controller {
             intervalACTextField.setFocusable(false);
             service.execute(autoClick);
         } else {
+            service.shutdownNow();
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
-            service.shutdownNow();
             service = Executors.newFixedThreadPool(2);
         }
+
     }
 
     public int getInterval(JTextField field) {

@@ -12,6 +12,7 @@ public class GUI {
     private final JButton KPButton = new JButton("Start Auto Button");
 
     public GUI() {
+
         JPanel panel = new JPanel();
         intervalACTextField.setText("1000");
         intervalKPTextField.setText("1000");
