@@ -143,12 +143,11 @@ public class Controller {
         if (isClicking) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
-            service.execute(autoClick);
+            autoClick.start();
         } else {
-            service.shutdownNow();
+            autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
-            service = Executors.newFixedThreadPool(2);
         }
 
     }
