@@ -12,7 +12,7 @@ public class App {
         GUI myGUI = new GUI();
         AutoClick myAutoClick = new AutoClick();
         KeyPress keyPress = new KeyPress();
-        Controller myController = new Controller(myAutoClick, myGUI, keyPress);
+        new Controller(myAutoClick, myGUI, keyPress);
     }
 
 }
