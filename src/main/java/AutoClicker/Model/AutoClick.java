@@ -1,27 +1,35 @@
 package AutoClicker.Model;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 
-public class AutoClick implements Runnable{
+public class AutoClick {
 
     private boolean isClicking = false;
     private int interval;
+    public SwingWorker<Void,Void> worker;
 
     public void setIsClicking(boolean isClicking, int interval) {
         this.isClicking = isClicking;
         this.interval =interval;
     }
 
-    @Override
-    public void run() {
-        while (isClicking) {
-            try {
-            click();
-                } catch (AWTException | InterruptedException ex) {
-            ex.printStackTrace();
+    public void start() {
+        worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                while (isClicking) {
+                    try {
+                        click();
+                    } catch (AWTException | InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                return null;
             }
-        }
+        };
+        worker.execute();
     }
 
     private void click() throws AWTException, InterruptedException {
