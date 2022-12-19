@@ -80,9 +80,9 @@ public class Controller {
             KPButton.setText("Stop Key Press");
             intervalKPTextField.setFocusable(false);
             keyPressTextField.setFocusable(false);
-            service.execute(keyPress);
+            keyPress.start();
         } else {
-            service.shutdownNow();
+            keyPress.worker.cancel(true);
             KPButton.setText("Start Key Press");
             intervalKPTextField.setFocusable(true);
             keyPressTextField.setFocusable(true);
