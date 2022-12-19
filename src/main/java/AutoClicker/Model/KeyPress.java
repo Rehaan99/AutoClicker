@@ -1,12 +1,14 @@
 package AutoClicker.Model;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class KeyPress  implements  Runnable{
+public class KeyPress {
 
     private boolean isPressing = false;
     private int interval;
     private int keyCode;
+    public SwingWorker<Void,Void> worker;
 
     public void setIsPressing(boolean isPressing, int interval) {
         this.isPressing = isPressing;
@@ -17,16 +19,23 @@ public class KeyPress  implements  Runnable{
         this.keyCode = keyCode;
     }
 
-    @Override
-    public void run() {
-        while (isPressing) {
-            try {
-                press();
-            } catch (InterruptedException | AWTException e) {
-                e.printStackTrace();
+    public void start() {
+        worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                while (isPressing) {
+                    try {
+                        press();
+                    } catch (InterruptedException | AWTException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
             }
-        }
+        };
+        worker.execute();
     }
+
     public void press() throws InterruptedException, AWTException {
         Robot bot = new Robot();
         while (isPressing) {

@@ -11,8 +11,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 public class Controller {
 
@@ -26,7 +25,6 @@ public class Controller {
     private final JButton KPButton;
     private final JTextField intervalKPTextField;
     private final JTextField keyPressTextField;
-    private ExecutorService service = Executors.newFixedThreadPool(2);
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
@@ -80,13 +78,12 @@ public class Controller {
             KPButton.setText("Stop Key Press");
             intervalKPTextField.setFocusable(false);
             keyPressTextField.setFocusable(false);
-            service.execute(keyPress);
+            keyPress.start();
         } else {
-            service.shutdownNow();
+            keyPress.worker.cancel(true);
             KPButton.setText("Start Key Press");
             intervalKPTextField.setFocusable(true);
             keyPressTextField.setFocusable(true);
-            service = Executors.newFixedThreadPool(2);
         }
     }
 
@@ -143,12 +140,11 @@ public class Controller {
         if (isClicking) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
-            service.execute(autoClick);
+            autoClick.start();
         } else {
-            service.shutdownNow();
+            autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
-            service = Executors.newFixedThreadPool(2);
         }
 
     }
