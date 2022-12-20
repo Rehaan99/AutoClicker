@@ -41,6 +41,8 @@ public class KeyPress {
         while (isPressing) {
             Thread.sleep(interval);
             bot.keyPress(keyCode);
+            Thread.sleep(200);
+            bot.keyRelease(keyCode);
         }
     }
 }
