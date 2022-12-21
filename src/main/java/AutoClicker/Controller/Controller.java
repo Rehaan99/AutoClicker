@@ -48,7 +48,11 @@ public class Controller {
         settingsButton.addActionListener(e -> {
             isVisible = !isVisible;
             functionsPanel.setVisible(isVisible);
-
+            if (isClicking) {
+                clickConditions();
+            } else if (isPressing) {
+                keyPressConditions();
+            }
         });
     }
 
