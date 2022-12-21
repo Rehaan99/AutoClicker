@@ -11,6 +11,7 @@ public class GUI {
     private final JTextField intervalKPTextField = new JTextField();
     private final JButton KPButton = new JButton("Start Auto Button");
     private final JButton settingsButton = new JButton();
+    private final JPanel functionsPanel = new JPanel();
 
     public GUI() {
         ImageIcon settingsIcon = new ImageIcon("resources/settingsImage.png");
@@ -30,7 +31,7 @@ public class GUI {
         settingsButton.setOpaque(false);
 
 
-        JPanel functionsPanel = new JPanel();
+
         functionsPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         functionsPanel.setLayout(new GridLayout(0, 4));
 
@@ -73,7 +74,11 @@ public class GUI {
     public JButton getACButton(){
         return buttonAutoClicker;
     }
-    public JButton getsettingsButton(){
+    public JButton getSettingsButton(){
         return settingsButton;
+    }
+
+    public JPanel getFunctionsPanel() {
+        return functionsPanel;
     }
 }

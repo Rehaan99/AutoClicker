@@ -18,26 +18,38 @@ public class Controller {
     private final AutoClick autoClick;
     private final KeyPress keyPress;
 
-    public static boolean isClicking = false;
-    public static boolean isPressing = false;
+    public boolean isClicking = false;
+    public boolean isPressing = false;
     private final JButton ACButton;
     private final JTextField intervalACTextField;
     private final JButton KPButton;
     private final JTextField intervalKPTextField;
     private final JTextField keyPressTextField;
     private final JButton settingsButton;
+    private final JPanel functionsPanel;
+    public boolean isVisible = true;
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
         this.keyPress = keyPress;
+        functionsPanel = gui.getFunctionsPanel();
         ACButton = gui.getACButton();
         intervalACTextField = gui.getIntervalACTextField();
         intervalKPTextField = gui.getIntervalKPTextField();
         keyPressTextField = gui.getKeyPressTextField();
         KPButton = gui.getKPButton();
-        settingsButton = gui.getsettingsButton();
+        settingsButton = gui.getSettingsButton();
         keyPresser();
         autoClicker();
+        settings();
+    }
+
+    public void settings() {
+        settingsButton.addActionListener(e -> {
+            isVisible = !isVisible;
+            functionsPanel.setVisible(isVisible);
+
+        });
     }
 
     public void keyPresser() {
