@@ -10,15 +10,26 @@ public class GUI {
     private final JTextField keyPressTextField = new JTextField();
     private final JTextField intervalKPTextField = new JTextField();
     private final JButton KPButton = new JButton("Start Auto Button");
+    private final JButton settingsButton = new JButton();
+
 
     public GUI() {
-
+        ImageIcon settingsIcon = new ImageIcon("resources/settingsImage.png");
+        Image image = settingsIcon.getImage();
+        image = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        settingsIcon = new ImageIcon(image);
         JPanel panel = new JPanel();
         intervalACTextField.setText("1000");
         intervalKPTextField.setText("1000");
         JLabel intervalLabel = new JLabel("Auto Clicker:");
         JLabel keyPressLabel = new JLabel("Auto Button:");
         KPButton.setEnabled(false);
+        settingsButton.setIcon(settingsIcon);
+        settingsButton.setPreferredSize(new Dimension(20, 20));
+        settingsButton.setBorderPainted(false);
+        settingsButton.setContentAreaFilled(false);
+        settingsButton.setFocusPainted(false);
+        settingsButton.setOpaque(false);
         panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         panel.setLayout(new GridLayout(0, 4));
 
@@ -37,6 +48,7 @@ public class GUI {
         panel.add(intervalKPTextField);
         panel.add(keyPressTextField);
         panel.add(KPButton);
+        panel.add(settingsButton);
 
         JFrame frame = new JFrame();
         frame.add(panel, BorderLayout.CENTER);
