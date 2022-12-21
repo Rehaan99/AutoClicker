@@ -12,52 +12,51 @@ public class GUI {
     private final JButton KPButton = new JButton("Start Auto Button");
     private final JButton settingsButton = new JButton();
 
-
     public GUI() {
         ImageIcon settingsIcon = new ImageIcon("resources/settingsImage.png");
         Image image = settingsIcon.getImage();
-        image = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        image = image.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         settingsIcon = new ImageIcon(image);
-        JPanel panel = new JPanel();
         intervalACTextField.setText("1000");
         intervalKPTextField.setText("1000");
         JLabel intervalLabel = new JLabel("Auto Clicker:");
         JLabel keyPressLabel = new JLabel("Auto Button:");
         KPButton.setEnabled(false);
         settingsButton.setIcon(settingsIcon);
-        settingsButton.setPreferredSize(new Dimension(20, 20));
+        settingsButton.setPreferredSize(new Dimension(10, 10));
         settingsButton.setBorderPainted(false);
         settingsButton.setContentAreaFilled(false);
         settingsButton.setFocusPainted(false);
         settingsButton.setOpaque(false);
-        panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-        panel.setLayout(new GridLayout(0, 4));
-
-        panel.add(new JLabel(""));
-        panel.add(new JLabel("Interval (ms) 1000ms = 1s"));
-        panel.add(new JLabel("Key Press"));
-        panel.add(new JLabel("Start/Stop Button"));
-
-        panel.add(intervalLabel);
-        panel.add(intervalACTextField);
-        panel.add(new JLabel(""));
-        panel.add(buttonAutoClicker);
 
 
-        panel.add(keyPressLabel);
-        panel.add(intervalKPTextField);
-        panel.add(keyPressTextField);
-        panel.add(KPButton);
-        panel.add(settingsButton);
+        JPanel functionsPanel = new JPanel();
+        functionsPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        functionsPanel.setLayout(new GridLayout(0, 4));
 
-        JFrame frame = new JFrame();
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Auto Clicker");
-        frame.pack();
-        frame.setVisible(true);
-        frame.setAlwaysOnTop(true);
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(new JLabel("Interval (ms) 1000ms = 1s"));
+        functionsPanel.add(new JLabel("Key Press"));
+        functionsPanel.add(new JLabel("Start/Stop Button"));
 
+        functionsPanel.add(intervalLabel);
+        functionsPanel.add(intervalACTextField);
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(buttonAutoClicker);
+        functionsPanel.add(keyPressLabel);
+        functionsPanel.add(intervalKPTextField);
+        functionsPanel.add(keyPressTextField);
+        functionsPanel.add(KPButton);
+
+        JFrame GUIPanel = new JFrame();
+        GUIPanel.setResizable(false);
+        GUIPanel.add(settingsButton,BorderLayout.LINE_END);
+        GUIPanel.add(functionsPanel, BorderLayout.CENTER);
+        GUIPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        GUIPanel.setTitle("Auto Clicker");
+        GUIPanel.pack();
+        GUIPanel.setVisible(true);
+        GUIPanel.setAlwaysOnTop(true);
     }
     public JTextField getKeyPressTextField(){
         return keyPressTextField;
@@ -73,5 +72,8 @@ public class GUI {
     }
     public JButton getACButton(){
         return buttonAutoClicker;
+    }
+    public JButton getsettingsButton(){
+        return settingsButton;
     }
 }

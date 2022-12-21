@@ -25,6 +25,7 @@ public class Controller {
     private final JButton KPButton;
     private final JTextField intervalKPTextField;
     private final JTextField keyPressTextField;
+    private final JButton settingsButton;
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
@@ -34,6 +35,7 @@ public class Controller {
         intervalKPTextField = gui.getIntervalKPTextField();
         keyPressTextField = gui.getKeyPressTextField();
         KPButton = gui.getKPButton();
+        settingsButton = gui.getsettingsButton();
         keyPresser();
         autoClicker();
     }
