@@ -189,8 +189,8 @@ public class Controller {
         if (integer > 300000) {
             integer = 300000;
         }
-        else if (integer < 100){
-            integer = 100;
+        else if (integer < 250){
+            integer = 250;
         }
         field.setText(String.valueOf(integer));
         return integer;
