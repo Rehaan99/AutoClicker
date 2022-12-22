@@ -9,6 +9,7 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -27,12 +28,16 @@ public class Controller {
     private final JTextField keyPressTextField;
     private final JButton settingsButton;
     private final JPanel functionsPanel;
+    private final JPanel settingsPanel;
+    private final JFrame window;
     public boolean isVisible = true;
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
         this.keyPress = keyPress;
+        window = gui.getWindow();
         functionsPanel = gui.getFunctionsPanel();
+        settingsPanel = gui.getSettingsPanel();
         ACButton = gui.getACButton();
         intervalACTextField = gui.getIntervalACTextField();
         intervalKPTextField = gui.getIntervalKPTextField();
@@ -47,7 +52,14 @@ public class Controller {
     public void settings() {
         settingsButton.addActionListener(e -> {
             isVisible = !isVisible;
-            functionsPanel.setVisible(isVisible);
+            if(isVisible){
+                window.remove(settingsPanel);
+                window.add(functionsPanel, BorderLayout.CENTER);
+            }else {
+                window.remove(functionsPanel);
+                window.add(settingsPanel, BorderLayout.CENTER);
+            }
+            window.repaint();
             if (isClicking) {
                 clickConditions();
             } else if (isPressing) {
