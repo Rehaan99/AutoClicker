@@ -11,6 +11,7 @@ public class GUI {
     private final JTextField intervalKPTextField = new JTextField();
     private final JButton KPButton = new JButton("Start Auto Button");
     private final JButton settingsButton = new JButton();
+    private final JButton runAllButton = new JButton("Run all Functions");
     private final JPanel functionsPanel = new JPanel();
     private final JPanel settingsPanel = new JPanel();
     private final JTextField autoClickHotKeyStart = new JTextField();
@@ -70,6 +71,11 @@ public class GUI {
         functionsPanel.add(intervalKPTextField);
         functionsPanel.add(keyPressTextField);
         functionsPanel.add(KPButton);
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(runAllButton);
+
 
         JPanel hotBar = new JPanel();
         hotBar.setLayout(new GridBagLayout());
@@ -99,10 +105,12 @@ public class GUI {
     public JButton getACButton(){
         return buttonAutoClicker;
     }
+    public JButton getRunAllButton(){
+        return runAllButton;
+    }
     public JButton getSettingsButton(){
         return settingsButton;
     }
-
     public JPanel getSettingsPanel() {
         return settingsPanel;
     }
