@@ -11,6 +11,7 @@ public class GUI {
     private final JTextField intervalKPTextField = new JTextField();
     private final JButton KPButton = new JButton("Start Auto Button");
     private final JButton settingsButton = new JButton();
+    private final JButton runAllButton = new JButton("Start All Functions");
     private final JPanel functionsPanel = new JPanel();
     private final JPanel settingsPanel = new JPanel();
     private final JTextField autoClickHotKeyStart = new JTextField();
@@ -29,7 +30,7 @@ public class GUI {
         KPButton.setEnabled(false);
 
         autoClickHotKeyStart.setOpaque(false);
-        autoClickHotKeyStart.setPreferredSize(new Dimension(25,25));
+        autoClickHotKeyStart.setPreferredSize(new Dimension(25, 25));
 
         settingsButton.setIcon(settingsIcon);
         settingsButton.setPreferredSize(new Dimension(25, 25));
@@ -70,6 +71,11 @@ public class GUI {
         functionsPanel.add(intervalKPTextField);
         functionsPanel.add(keyPressTextField);
         functionsPanel.add(KPButton);
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(new JLabel(""));
+        functionsPanel.add(runAllButton);
+
 
         JPanel hotBar = new JPanel();
         hotBar.setLayout(new GridBagLayout());
@@ -84,32 +90,44 @@ public class GUI {
         window.setVisible(true);
         window.setAlwaysOnTop(true);
     }
-    public JTextField getKeyPressTextField(){
+
+    public JTextField getKeyPressTextField() {
         return keyPressTextField;
     }
-    public JTextField getIntervalKPTextField(){
+
+    public JTextField getIntervalKPTextField() {
         return intervalKPTextField;
     }
-    public JTextField getIntervalACTextField(){
+
+    public JTextField getIntervalACTextField() {
         return intervalACTextField;
     }
-    public JButton getKPButton(){
+
+    public JButton getKPButton() {
         return KPButton;
     }
-    public JButton getACButton(){
+
+    public JButton getACButton() {
         return buttonAutoClicker;
     }
-    public JButton getSettingsButton(){
+
+    public JButton getRunAllButton() {
+        return runAllButton;
+    }
+
+    public JButton getSettingsButton() {
         return settingsButton;
     }
 
     public JPanel getSettingsPanel() {
         return settingsPanel;
     }
+
     public JPanel getFunctionsPanel() {
         return functionsPanel;
     }
-    public JFrame getWindow(){
+
+    public JFrame getWindow() {
         return window;
     }
 }
