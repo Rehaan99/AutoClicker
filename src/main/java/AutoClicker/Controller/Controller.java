@@ -27,6 +27,7 @@ public class Controller {
     private final JTextField intervalKPTextField;
     private final JTextField keyPressTextField;
     private final JButton settingsButton;
+    private final JButton runAllButton;
     private final JPanel functionsPanel;
     private final JPanel settingsPanel;
     private final JFrame window;
@@ -44,12 +45,11 @@ public class Controller {
         keyPressTextField = gui.getKeyPressTextField();
         KPButton = gui.getKPButton();
         settingsButton = gui.getSettingsButton();
-        keyPresser();
-        autoClicker();
-        settings();
+        runAllButton = gui.getRunAllButton();
+        createListeners();
     }
 
-    public void settings() {
+    public void createListeners() throws NativeHookException {
         settingsButton.addActionListener(e -> {
             isVisible = !isVisible;
             if(isVisible){
@@ -66,9 +66,7 @@ public class Controller {
                 keyPressConditions();
             }
         });
-    }
 
-    public void keyPresser() {
         KPButton.addActionListener(e -> keyPressConditions());
         intervalKPTextField.addKeyListener(new KeyListener() {
             @Override
@@ -99,25 +97,7 @@ public class Controller {
             public void keyReleased(KeyEvent e) {
             }
         });
-    }
-    public void keyPressConditions() {
-        isPressing = !isPressing;
-        keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField));
-        keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
-        if (isPressing) {
-            KPButton.setText("Stop Key Press");
-            intervalKPTextField.setFocusable(false);
-            keyPressTextField.setFocusable(false);
-            keyPress.start();
-        } else {
-            keyPress.worker.cancel(true);
-            KPButton.setText("Start Key Press");
-            intervalKPTextField.setFocusable(true);
-            keyPressTextField.setFocusable(true);
-        }
-    }
 
-    public void autoClicker() throws NativeHookException {
         intervalACTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -162,6 +142,29 @@ public class Controller {
             }
         });
     }
+
+    public void startAll() {
+        
+    }
+
+
+    public void keyPressConditions() {
+        isPressing = !isPressing;
+        keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField));
+        keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
+        if (isPressing) {
+            KPButton.setText("Stop Key Press");
+            intervalKPTextField.setFocusable(false);
+            keyPressTextField.setFocusable(false);
+            keyPress.start();
+        } else {
+            keyPress.worker.cancel(true);
+            KPButton.setText("Start Key Press");
+            intervalKPTextField.setFocusable(true);
+            keyPressTextField.setFocusable(true);
+        }
+    }
+
     public void clickConditions() {
 
         isClicking = !isClicking;
