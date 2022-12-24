@@ -18,9 +18,6 @@ public class Controller {
 
     private final AutoClick autoClick;
     private final KeyPress keyPress;
-
-    public boolean isClicking = false;
-    public boolean isPressing = false;
     private final JButton ACButton;
     private final JTextField intervalACTextField;
     private final JButton KPButton;
@@ -31,6 +28,9 @@ public class Controller {
     private final JPanel functionsPanel;
     private final JPanel settingsPanel;
     private final JFrame window;
+    public boolean isClicking = false;
+    public boolean isPressing = false;
+    public boolean pressAll = false;
     public boolean isVisible = true;
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
@@ -52,10 +52,10 @@ public class Controller {
     public void createListeners() throws NativeHookException {
         settingsButton.addActionListener(e -> {
             isVisible = !isVisible;
-            if(isVisible){
+            if (isVisible) {
                 window.remove(settingsPanel);
                 window.add(functionsPanel, BorderLayout.CENTER);
-            }else {
+            } else {
                 window.remove(functionsPanel);
                 window.add(settingsPanel, BorderLayout.CENTER);
             }
@@ -76,23 +76,30 @@ public class Controller {
                     e.consume();
                 }
             }
+
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
+
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
         keyPressTextField.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
+
             @Override
             public void keyPressed(KeyEvent e) {
                 KPButton.setEnabled(true);
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                     KPButton.setEnabled(false);
-                }else if (keyPressTextField.getText().length() > 0) {
+                } else if (keyPressTextField.getText().length() > 0) {
                     keyPressTextField.setText("");
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -141,10 +148,29 @@ public class Controller {
             public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
             }
         });
+        runAllButton.addActionListener(e -> startAll());
+
     }
 
     public void startAll() {
-        
+        pressAll = !pressAll;
+        if (pressAll) {
+            if (!isPressing & keyPressTextField.getText().length() > 0 ) {
+                keyPressConditions();
+            }
+            if (!isClicking) {
+                clickConditions();
+            }
+            runAllButton.setText("Stop All Functions");
+        } else {
+            if (isPressing) {
+                keyPressConditions();
+            }
+            if (isClicking) {
+                clickConditions();
+            }
+            runAllButton.setText("Start All Functions");
+        }
     }
 
 
@@ -191,8 +217,7 @@ public class Controller {
         }
         if (integer > 300000) {
             integer = 300000;
-        }
-        else if (integer < 250){
+        } else if (integer < 250) {
             integer = 250;
         }
         field.setText(String.valueOf(integer));
