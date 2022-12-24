@@ -6,13 +6,13 @@ import java.awt.event.InputEvent;
 
 public class AutoClick {
 
+    public SwingWorker<Void, Void> worker;
     private boolean isClicking = false;
     private int interval;
-    public SwingWorker<Void,Void> worker;
 
     public void setIsClicking(boolean isClicking, int interval) {
         this.isClicking = isClicking;
-        this.interval =interval;
+        this.interval = interval;
     }
 
     public void start() {

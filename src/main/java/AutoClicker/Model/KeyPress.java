@@ -5,19 +5,19 @@ import java.awt.*;
 
 public class KeyPress {
 
+    public SwingWorker<Void, Void> worker;
     private boolean isPressing = false;
     private int interval;
     private int keyCode;
     private int baseInterval;
-    public SwingWorker<Void,Void> worker;
 
     public void setIsPressing(boolean isPressing, int interval) {
         this.isPressing = isPressing;
-        this.interval =interval;
+        this.interval = interval;
         this.baseInterval = interval;
     }
 
-    public void setKeyCode(int keyCode){
+    public void setKeyCode(int keyCode) {
         this.keyCode = keyCode;
     }
 
@@ -45,7 +45,7 @@ public class KeyPress {
             bot.keyPress(keyCode);
             Thread.sleep(200);
             bot.keyRelease(keyCode);
-            if (interval == baseInterval){
+            if (interval == baseInterval) {
                 interval -= 200;
             }
         }
