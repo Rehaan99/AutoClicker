@@ -15,7 +15,7 @@ public class AutoClick {
         this.interval = interval;
     }
 
-    public void start() {
+    public void start(int maxPresses) {
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
