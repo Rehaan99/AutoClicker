@@ -19,22 +19,22 @@ public class AutoClick {
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                while (isClicking) {
                     try {
-                        click();
+                        click(maxPresses);
                     } catch (AWTException | InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                }
                 return null;
             }
         };
         worker.execute();
     }
 
-    private void click() throws AWTException, InterruptedException {
+    private void click(int maxPresses) throws AWTException, InterruptedException {
         Robot bot = new Robot();
-        while (isClicking) {
+        int numberOfClicks = 0;
+        while (isClicking || numberOfClicks <= maxPresses) {
+            numberOfClicks++;
             Thread.sleep(interval);// After interval press and release on the mouse left click.
             bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
