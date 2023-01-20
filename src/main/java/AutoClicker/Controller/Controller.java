@@ -32,6 +32,8 @@ public class Controller {
     public boolean isPressing = false;
     public boolean pressAll = false;
     public boolean isVisible = true;
+    public int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
+
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
@@ -182,7 +184,7 @@ public class Controller {
             KPButton.setText("Stop Key Press");
             intervalKPTextField.setFocusable(false);
             keyPressTextField.setFocusable(false);
-            keyPress.start();
+            keyPress.start(maxFunctions);
         } else {
             keyPress.worker.cancel(true);
             KPButton.setText("Start Key Press");
@@ -199,7 +201,7 @@ public class Controller {
         if (isClicking) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
-            autoClick.start();
+            autoClick.start(maxFunctions);
         } else {
             autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
