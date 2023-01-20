@@ -133,11 +133,9 @@ public class Controller {
         GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyPressed(NativeKeyEvent e) {
-                if (e.getKeyCode() == NativeKeyEvent.VC_F1) {
-                    isClicking = false;
+                if (e.getKeyCode() == NativeKeyEvent.VC_F1 && isClicking == false) {
                     clickConditions();
-                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2) {
-                    isClicking = true;
+                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2 && isClicking == true) {
                     clickConditions();
                 }
             }
