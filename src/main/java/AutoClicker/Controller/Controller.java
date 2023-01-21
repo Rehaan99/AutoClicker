@@ -119,7 +119,7 @@ public class Controller {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    intervalACTextField.setFocusable(false);
+                    intervalACTextField.setFocusable(false); // investigate how this functionality works, its odd.
                     clickConditions();
                 }
             }
@@ -155,7 +155,7 @@ public class Controller {
     public void startAll() {
         pressAll = !pressAll;
         if (pressAll) {
-            if (!isPressing & keyPressTextField.getText().length() > 0 ) {
+            if (!isPressing & keyPressTextField.getText().length() > 0) {
                 keyPressConditions();
             }
             if (!isClicking) {
@@ -194,13 +194,14 @@ public class Controller {
     public void clickConditions() {
 
         isClicking = !isClicking;
-        autoClick.setIsClicking(isClicking, getInterval(intervalACTextField));
+        autoClick.setIsClicking(isClicking, getInterval(intervalACTextField), maxFunctions);
 
         if (isClicking) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
-            autoClick.start(maxFunctions);
-        } else {
+            autoClick.start();
+        }
+        if (!isClicking || autoClick.worker.isDone()){
             autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
