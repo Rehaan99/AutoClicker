@@ -150,7 +150,8 @@ public class Controller {
         });
         runAllButton.addActionListener(e -> startAll());
 
-        AutoClick.addSwingWorkerListener(worker -> {
+        AutoClick.addSwingWorkerListener(e -> {
+            isClicking = false;
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
         });
@@ -201,12 +202,12 @@ public class Controller {
         isClicking = !isClicking;
         autoClick.setIsClicking(isClicking, getInterval(intervalACTextField), maxFunctions);
 
-        if (isClicking) {
+        if (autoClick.worker == null || autoClick.worker.isDone()) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
             autoClick.start();
         }
-        if (!isClicking || autoClick.worker.isDone()) {
+        else {
             autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
