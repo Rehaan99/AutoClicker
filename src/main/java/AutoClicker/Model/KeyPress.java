@@ -21,7 +21,7 @@ public class KeyPress {
         this.keyCode = keyCode;
     }
 
-    public void start() {
+    public void start(int maxClicks) {
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {

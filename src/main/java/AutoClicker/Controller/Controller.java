@@ -28,10 +28,12 @@ public class Controller {
     private final JPanel functionsPanel;
     private final JPanel settingsPanel;
     private final JFrame window;
-    public boolean isClicking = false;
-    public boolean isPressing = false;
-    public boolean pressAll = false;
-    public boolean isVisible = true;
+    private boolean isClicking = false;
+    private boolean isPressing = false;
+    private boolean pressAll = false;
+    private boolean isVisible = true;
+    private int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
+
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
         this.autoClick = autoClick;
@@ -117,7 +119,7 @@ public class Controller {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    intervalACTextField.setFocusable(false);
+                    intervalACTextField.setFocusable(false); // investigate how this functionality works, its odd.
                     clickConditions();
                 }
             }
@@ -131,11 +133,9 @@ public class Controller {
         GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyPressed(NativeKeyEvent e) {
-                if (e.getKeyCode() == NativeKeyEvent.VC_F1) {
-                    isClicking = false;
+                if (e.getKeyCode() == NativeKeyEvent.VC_F1 && !isClicking) {
                     clickConditions();
-                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2) {
-                    isClicking = true;
+                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2 && isClicking) {
                     clickConditions();
                 }
             }
@@ -150,12 +150,18 @@ public class Controller {
         });
         runAllButton.addActionListener(e -> startAll());
 
+        AutoClick.addSwingWorkerListener(e -> {
+            isClicking = false;
+            ACButton.setText("Start Auto Clicker (F1)");
+            intervalACTextField.setFocusable(true);
+        });
+
     }
 
     public void startAll() {
         pressAll = !pressAll;
         if (pressAll) {
-            if (!isPressing & keyPressTextField.getText().length() > 0 ) {
+            if (!isPressing & keyPressTextField.getText().length() > 0) {
                 keyPressConditions();
             }
             if (!isClicking) {
@@ -182,7 +188,7 @@ public class Controller {
             KPButton.setText("Stop Key Press");
             intervalKPTextField.setFocusable(false);
             keyPressTextField.setFocusable(false);
-            keyPress.start();
+            keyPress.start(maxFunctions);
         } else {
             keyPress.worker.cancel(true);
             KPButton.setText("Start Key Press");
@@ -194,13 +200,14 @@ public class Controller {
     public void clickConditions() {
 
         isClicking = !isClicking;
-        autoClick.setIsClicking(isClicking, getInterval(intervalACTextField));
+        autoClick.setIsClicking(isClicking, getInterval(intervalACTextField), maxFunctions);
 
-        if (isClicking) {
+        if (autoClick.worker == null || autoClick.worker.isDone()) {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
             autoClick.start();
-        } else {
+        }
+        else {
             autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
