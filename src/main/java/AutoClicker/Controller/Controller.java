@@ -155,6 +155,12 @@ public class Controller {
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
         });
+        KeyPress.addSwingWorkerListener(e -> {
+            isPressing = false;
+            KPButton.setText("Start Key Press");
+            intervalKPTextField.setFocusable(true);
+            keyPressTextField.setFocusable(true);
+        });
 
     }
 
@@ -182,13 +188,13 @@ public class Controller {
 
     public void keyPressConditions() {
         isPressing = !isPressing;
-        keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField));
+        keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField), maxFunctions);
         keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
         if (isPressing) {
             KPButton.setText("Stop Key Press");
             intervalKPTextField.setFocusable(false);
             keyPressTextField.setFocusable(false);
-            keyPress.start(maxFunctions);
+            keyPress.start();
         } else {
             keyPress.worker.cancel(true);
             KPButton.setText("Start Key Press");
@@ -206,8 +212,7 @@ public class Controller {
             ACButton.setText("Stop Auto Clicker (F2)");
             intervalACTextField.setFocusable(false);
             autoClick.start();
-        }
-        else {
+        } else {
             autoClick.worker.cancel(true);
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
