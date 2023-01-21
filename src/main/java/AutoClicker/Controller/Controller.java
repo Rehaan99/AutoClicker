@@ -28,11 +28,11 @@ public class Controller {
     private final JPanel functionsPanel;
     private final JPanel settingsPanel;
     private final JFrame window;
-    public boolean isClicking = false;
-    public boolean isPressing = false;
-    public boolean pressAll = false;
-    public boolean isVisible = true;
-    public int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
+    private boolean isClicking = false;
+    private boolean isPressing = false;
+    private boolean pressAll = false;
+    private boolean isVisible = true;
+    private int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
 
 
     public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
@@ -133,9 +133,9 @@ public class Controller {
         GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyPressed(NativeKeyEvent e) {
-                if (e.getKeyCode() == NativeKeyEvent.VC_F1 && isClicking == false) {
+                if (e.getKeyCode() == NativeKeyEvent.VC_F1 && !isClicking) {
                     clickConditions();
-                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2 && isClicking == true) {
+                } else if (e.getKeyCode() == NativeKeyEvent.VC_F2 && isClicking) {
                     clickConditions();
                 }
             }
