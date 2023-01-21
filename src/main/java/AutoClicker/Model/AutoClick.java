@@ -9,36 +9,44 @@ public class AutoClick {
     public SwingWorker<Void, Void> worker;
     private boolean isClicking = false;
     private int interval;
+    private int maxClicks;
 
-    public void setIsClicking(boolean isClicking, int interval) {
-        this.isClicking = isClicking;
-        this.interval = interval;
-    }
 
-    public void start(int maxPresses) {
+    private void createNewSwingWorker(){
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                    try {
-                        click(maxPresses);
-                    } catch (AWTException | InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
+                try {
+                    click();
+                } catch (AWTException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 return null;
             }
         };
+    }
+
+    public void setIsClicking(boolean isClicking, int interval, int maxClicks) {
+        this.isClicking = isClicking;
+        this.interval = interval;
+        this.maxClicks = maxClicks;
+    }
+
+    public void start() {
+        createNewSwingWorker();
         worker.execute();
     }
 
-    private void click(int maxPresses) throws AWTException, InterruptedException {
+    private void click() throws AWTException, InterruptedException {
         Robot bot = new Robot();
         int numberOfClicks = 0;
-        while (isClicking || numberOfClicks <= maxPresses) {
+        while (isClicking && numberOfClicks < maxClicks) {
             numberOfClicks++;
             Thread.sleep(interval);// After interval press and release on the mouse left click.
             bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         }
+        worker.cancel(true);
     }
 
 }
