@@ -51,22 +51,26 @@ public class Controller {
         createListeners();
     }
 
-    public void createListeners() throws NativeHookException {
+    private void settingsButtonPressed(){
+        isVisible = !isVisible;
+        if (isVisible) {
+            window.remove(settingsPanel);
+            window.add(functionsPanel, BorderLayout.CENTER);
+        } else {
+            window.remove(functionsPanel);
+            window.add(settingsPanel, BorderLayout.CENTER);
+        }
+        window.repaint();
+        if (isClicking) {
+            clickConditions();
+        } else if (isPressing) {
+            keyPressConditions();
+        }
+    }
+
+    private void createListeners() throws NativeHookException {
         settingsButton.addActionListener(e -> {
-            isVisible = !isVisible;
-            if (isVisible) {
-                window.remove(settingsPanel);
-                window.add(functionsPanel, BorderLayout.CENTER);
-            } else {
-                window.remove(functionsPanel);
-                window.add(settingsPanel, BorderLayout.CENTER);
-            }
-            window.repaint();
-            if (isClicking) {
-                clickConditions();
-            } else if (isPressing) {
-                keyPressConditions();
-            }
+            settingsButtonPressed();
         });
 
         KPButton.addActionListener(e -> keyPressConditions());
@@ -106,7 +110,6 @@ public class Controller {
             public void keyReleased(KeyEvent e) {
             }
         });
-
         intervalACTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -155,13 +158,59 @@ public class Controller {
             ACButton.setText("Start Auto Clicker (F1)");
             intervalACTextField.setFocusable(true);
         });
+
         KeyPress.addSwingWorkerListener(e -> {
             isPressing = false;
             KPButton.setText("Start Key Press");
             intervalKPTextField.setFocusable(true);
             keyPressTextField.setFocusable(true);
         });
+    }
 
+    private void keyPressConditions() {
+        isPressing = !isPressing;
+
+        if (isPressing) {
+            KPButton.setText("Stop Key Press");
+            int KeyCode = (java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
+            keyPress.start(KeyCode,isPressing, getInterval(intervalKPTextField), maxFunctions);
+        } else {
+            keyPress.worker.cancel(true);
+            KPButton.setText("Start Key Press");
+        }
+        intervalKPTextField.setFocusable(!isPressing);
+        keyPressTextField.setFocusable(!isPressing);
+    }
+
+    private void clickConditions() {
+
+        isClicking = !isClicking;
+        if (autoClick.worker == null || autoClick.worker.isDone()) {
+            ACButton.setText("Stop Auto Clicker (F2)");
+            intervalACTextField.setFocusable(false);
+            autoClick.start(isClicking, getInterval(intervalACTextField), maxFunctions);
+        } else {
+            autoClick.worker.cancel(true);
+            ACButton.setText("Start Auto Clicker (F1)");
+            intervalACTextField.setFocusable(true);
+        }
+
+    }
+
+    private int getInterval(JTextField field) {
+        int integer;
+        try {
+            integer = Integer.parseInt(field.getText());
+        } catch (NumberFormatException ex) {
+            integer = 300000;
+        }
+        if (integer > 300000) {
+            integer = 300000;
+        } else if (integer < 250) {
+            integer = 250;
+        }
+        field.setText(String.valueOf(integer));
+        return integer;
     }
 
     public void startAll() {
@@ -183,57 +232,6 @@ public class Controller {
             }
             runAllButton.setText("Start All Functions");
         }
-    }
-
-
-    public void keyPressConditions() {
-        isPressing = !isPressing;
-        keyPress.setIsPressing(isPressing, getInterval(intervalKPTextField), maxFunctions);
-        keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
-        if (isPressing) {
-            KPButton.setText("Stop Key Press");
-            intervalKPTextField.setFocusable(false);
-            keyPressTextField.setFocusable(false);
-            keyPress.start();
-        } else {
-            keyPress.worker.cancel(true);
-            KPButton.setText("Start Key Press");
-            intervalKPTextField.setFocusable(true);
-            keyPressTextField.setFocusable(true);
-        }
-    }
-
-    public void clickConditions() {
-
-        isClicking = !isClicking;
-        autoClick.setIsClicking(isClicking, getInterval(intervalACTextField), maxFunctions);
-
-        if (autoClick.worker == null || autoClick.worker.isDone()) {
-            ACButton.setText("Stop Auto Clicker (F2)");
-            intervalACTextField.setFocusable(false);
-            autoClick.start();
-        } else {
-            autoClick.worker.cancel(true);
-            ACButton.setText("Start Auto Clicker (F1)");
-            intervalACTextField.setFocusable(true);
-        }
-
-    }
-
-    public int getInterval(JTextField field) {
-        int integer;
-        try {
-            integer = Integer.parseInt(field.getText());
-        } catch (NumberFormatException ex) {
-            integer = 300000;
-        }
-        if (integer > 300000) {
-            integer = 300000;
-        } else if (integer < 250) {
-            integer = 250;
-        }
-        field.setText(String.valueOf(integer));
-        return integer;
     }
 
 }

@@ -17,17 +17,6 @@ public class KeyPress {
         listeners.add(listener);
     }
 
-    public void setIsPressing(boolean isPressing, int interval, int maxPresses) {
-        this.isPressing = isPressing;
-        this.interval = interval;
-        this.baseInterval = interval;
-        this.maxPresses = maxPresses;
-    }
-
-    public void setKeyCode(int keyCode) {
-        this.keyCode = keyCode;
-    }
-
     private void createNewSwingWorker() {
         worker = new SwingWorker<>() {
             @Override
@@ -49,7 +38,12 @@ public class KeyPress {
         };
     }
 
-    public void start() {
+    public void start(int keyCode, boolean isPressing, int interval, int maxPresses) {
+        this.keyCode = keyCode;
+        this.isPressing = isPressing;
+        this.interval = interval;
+        this.baseInterval = interval;
+        this.maxPresses = maxPresses;
         createNewSwingWorker();
         worker.execute();
     }

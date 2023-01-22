@@ -32,17 +32,10 @@ public class AutoClick {
         };
     }
 
-    public static void addSwingWorkerListener(SwingWorkerListener listener) {
-        listeners.add(listener);
-    }
-
-    public void setIsClicking(boolean isClicking, int interval, int maxClicks) {
+    public void start(boolean isClicking, int interval, int maxClicks) {
         this.isClicking = isClicking;
         this.interval = interval;
         this.maxClicks = maxClicks;
-    }
-
-    public void start() {
         createNewSwingWorker();
         worker.execute();
     }
@@ -57,5 +50,9 @@ public class AutoClick {
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         }
         worker.cancel(true);
+    }
+
+    public static void addSwingWorkerListener(SwingWorkerListener listener) {
+        listeners.add(listener);
     }
 }
