@@ -5,10 +5,9 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
 
-public class AutoClick {
+public class AutoClick implements AutoFunction {
     private static ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
-    public SwingWorker<Void, Void> worker;
-    private boolean isClicking = false;
+    private SwingWorker<Void, Void> worker;
     private int interval;
     private int maxClicks;
 
@@ -17,7 +16,10 @@ public class AutoClick {
             @Override
             protected Void doInBackground() {
                 try {
-                    click();
+                    for (SwingWorkerListener listener : listeners) {
+                        listener.onSwingWorkerStart(this);
+                    }
+                    function();
                 } catch (AWTException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -32,18 +34,23 @@ public class AutoClick {
         };
     }
 
-    public void start(boolean isClicking, int interval, int maxClicks) {
-        this.isClicking = isClicking;
+    @Override
+    public SwingWorker<Void, Void> getWorker() {
+        return worker;
+    }
+
+    @Override
+    public void start(int interval, int maxRuns) {
         this.interval = interval;
-        this.maxClicks = maxClicks;
+        maxClicks = maxRuns;
         createNewSwingWorker();
         worker.execute();
     }
 
-    private void click() throws AWTException, InterruptedException {
+    private void function() throws AWTException, InterruptedException {
         Robot bot = new Robot();
         int numberOfClicks = 0;
-        while (isClicking && numberOfClicks < maxClicks) {
+        while (numberOfClicks < maxClicks || maxClicks == 0) {
             numberOfClicks++;
             Thread.sleep(interval);// After interval press and release on the mouse left click.
             bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
