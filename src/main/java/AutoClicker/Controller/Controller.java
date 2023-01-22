@@ -236,24 +236,24 @@ public class Controller {
     }
 
     public void startAll() {
-        pressAll = !pressAll;
-        if (pressAll) {
-            if (!isPressing & keyPressTextField.getText().length() > 0) {
-                keyPressConditions();
-            }
-            if (!isClicking) {
-                clickConditions();
-            }
-            runAllButton.setText("Stop All Functions");
-        } else {
-            if (isPressing) {
-                keyPressConditions();
-            }
-            if (isClicking) {
-                clickConditions();
-            }
-            runAllButton.setText("Start All Functions");
-        }
+//        pressAll = !pressAll;
+//        if (pressAll) {
+//            if (!isPressing & keyPressTextField.getText().length() > 0) {
+//                keyPressConditions();
+//            }
+//            if (!isClicking) {
+//                clickConditions();
+//            }
+//            runAllButton.setText("Stop All Functions");
+//        } else {
+//            if (isPressing) {
+//                keyPressConditions();
+//            }
+//            if (isClicking) {
+//                clickConditions();
+//            }
+//            runAllButton.setText("Start All Functions");
+//        }
     }
 
 }
