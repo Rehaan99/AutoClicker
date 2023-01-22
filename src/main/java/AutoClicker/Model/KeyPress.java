@@ -4,10 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class KeyPress {
+public class KeyPress implements AutoFunction {
     private static ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
-    public SwingWorker<Void, Void> worker;
-    private boolean isPressing = false;
+    private SwingWorker<Void, Void> worker;
     private int interval;
     private int keyCode;
     private int baseInterval;
@@ -17,23 +16,15 @@ public class KeyPress {
         listeners.add(listener);
     }
 
-    public void setIsPressing(boolean isPressing, int interval, int maxPresses) {
-        this.isPressing = isPressing;
-        this.interval = interval;
-        this.baseInterval = interval;
-        this.maxPresses = maxPresses;
-    }
-
-    public void setKeyCode(int keyCode) {
-        this.keyCode = keyCode;
-    }
-
     private void createNewSwingWorker() {
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
                 try {
-                    press();
+                    for (SwingWorkerListener listener : listeners) {
+                        listener.onSwingWorkerStart(this);
+                    }
+                    automation();
                 } catch (AWTException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -49,15 +40,28 @@ public class KeyPress {
         };
     }
 
-    public void start() {
+    public void setKeyCode(int keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    @Override
+    public SwingWorker<Void, Void> getWorker() {
+        return worker;
+    }
+
+    @Override
+    public void start(int interval, int maxRuns) {
+        this.interval = interval;
+        this.baseInterval = interval;
+        maxPresses = maxRuns;
         createNewSwingWorker();
         worker.execute();
     }
 
-    public void press() throws InterruptedException, AWTException {
+    private void automation() throws InterruptedException, AWTException {
         Robot bot = new Robot();
         int numberOfPresses = 0;
-        while (isPressing && numberOfPresses < maxPresses) {
+        while (numberOfPresses < maxPresses || maxPresses == 0) {
             numberOfPresses++;
             Thread.sleep(interval);
             bot.keyPress(keyCode);
