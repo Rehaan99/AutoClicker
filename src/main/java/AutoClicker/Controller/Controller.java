@@ -65,7 +65,8 @@ public class Controller {
         window.repaint();
         if (isClicking) {
             clickConditions();
-        } else if (isPressing) {
+        }
+        if (isPressing) {
             keyPressConditions();
         }
     }
