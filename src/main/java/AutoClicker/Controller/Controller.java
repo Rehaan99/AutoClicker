@@ -32,7 +32,7 @@ public class Controller {
     private final JFrame window;
     private boolean isClicking = false;
     private boolean isPressing = false;
-    private boolean pressAll = false;
+    ///private boolean pressAll = false;
     private boolean isVisible = true;
     private int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
 
@@ -64,19 +64,21 @@ public class Controller {
         }
         window.repaint();
         if (isClicking) {
-            clickConditions();
+            doFunction(autoClick, getInterval(intervalACTextField), maxFunctions);
         }
         if (isPressing) {
-            keyPressConditions();
+            doFunction(keyPress, getInterval(intervalKPTextField), maxFunctions);
         }
     }
 
     private void createListeners() throws NativeHookException {
-        settingsButton.addActionListener(e -> {
-            settingsButtonPressed();
+        settingsButton.addActionListener(e -> settingsButtonPressed());
+
+        KPButton.addActionListener(e -> {
+            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
+            doFunction(keyPress, getInterval(intervalKPTextField), maxFunctions);
         });
 
-        KPButton.addActionListener(e -> keyPressConditions());
         intervalKPTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -124,25 +126,21 @@ public class Controller {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    intervalACTextField.setFocusable(false); // investigate how this functionality works, its odd.
-                    clickConditions();
-                }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
             }
         });
-        ACButton.addActionListener(e -> clickConditions());
+        ACButton.addActionListener(e -> doFunction(autoClick, getInterval(intervalACTextField), maxFunctions));
         GlobalScreen.registerNativeHook();
         GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyPressed(NativeKeyEvent e) {
                 if (e.getKeyCode() == NativeKeyEvent.VC_F1 && !isClicking) {
-                    clickConditions();
+                    doFunction(autoClick, getInterval(intervalACTextField), maxFunctions);
                 } else if (e.getKeyCode() == NativeKeyEvent.VC_F2 && isClicking) {
-                    clickConditions();
+                    doFunction(autoClick, getInterval(intervalACTextField), maxFunctions);
                 }
             }
 
@@ -167,6 +165,7 @@ public class Controller {
             @Override
             public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
                 ACButton.setText("Stop Auto Clicker (F2)");
+                isClicking = true;
                 intervalACTextField.setFocusable(false);
             }
         });
@@ -182,6 +181,7 @@ public class Controller {
             @Override
             public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
                 KPButton.setText("Stop Key Press");
+                isPressing = true;
                 setFocusable();
             }
         });
@@ -192,30 +192,11 @@ public class Controller {
         keyPressTextField.setFocusable(!isPressing);
     }
 
-    private void keyPressConditions() {
-        isPressing = !isPressing;
-        if (keyPress.getWorker() == null || keyPress.getWorker().isDone()) {
-            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
-            keyPress.start(getInterval(intervalKPTextField), maxFunctions);
-        } else {
-            keyPress.getWorker().cancel(true);
-        }
-    }
-
-    private void doFunction(AutoFunction function, int interval, int maxFunctions){
+    private void doFunction(AutoFunction function, int interval, int maxFunctions) {
         if (function.getWorker() == null || function.getWorker().isDone()) {
             function.start(interval, maxFunctions);
         } else {
             function.getWorker().cancel(true);
-        }
-    }
-
-    private void clickConditions() {
-        isClicking = !isClicking;
-        if (autoClick.getWorker() == null || autoClick.getWorker().isDone()) {
-            autoClick.start(getInterval(intervalACTextField), maxFunctions);
-        } else {
-            autoClick.getWorker().cancel(true);
         }
     }
 
@@ -235,7 +216,7 @@ public class Controller {
         return interval;
     }
 
-    public void startAll() {
+    private void startAll() {
 //        pressAll = !pressAll;
 //        if (pressAll) {
 //            if (!isPressing & keyPressTextField.getText().length() > 0) {

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class KeyPress implements AutoFunction{
+public class KeyPress implements AutoFunction {
     private static ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
     private SwingWorker<Void, Void> worker;
     private int interval;
@@ -39,7 +39,8 @@ public class KeyPress implements AutoFunction{
             }
         };
     }
-    public void setKeyCode(int keyCode){
+
+    public void setKeyCode(int keyCode) {
         this.keyCode = keyCode;
     }
 
@@ -49,7 +50,7 @@ public class KeyPress implements AutoFunction{
     }
 
     @Override
-    public void start( int interval, int maxRuns) {
+    public void start(int interval, int maxRuns) {
         this.interval = interval;
         this.baseInterval = interval;
         maxPresses = maxRuns;
