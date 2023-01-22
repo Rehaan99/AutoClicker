@@ -219,19 +219,19 @@ public class Controller {
     }
 
     private int getInterval(JTextField field) {
-        int integer;
+        int interval;
         try {
-            integer = Integer.parseInt(field.getText());
+            interval = Integer.parseInt(field.getText());
         } catch (NumberFormatException ex) {
-            integer = 300000;
+            interval = 300000;
         }
-        if (integer > 300000) {
-            integer = 300000;
-        } else if (integer < 250) {
-            integer = 250;
+        if (interval > 300000) {
+            interval = 300000;
+        } else if (interval < 250) {
+            interval = 250;
         }
-        field.setText(String.valueOf(integer));
-        return integer;
+        field.setText(String.valueOf(interval));
+        return interval;
     }
 
     public void startAll() {
