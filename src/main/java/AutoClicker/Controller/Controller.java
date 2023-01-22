@@ -1,7 +1,9 @@
 package AutoClicker.Controller;
 
 import AutoClicker.Model.AutoClick;
+import AutoClicker.Model.AutoFunction;
 import AutoClicker.Model.KeyPress;
+import AutoClicker.Model.SwingWorkerListener;
 import AutoClicker.View.GUI;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -51,7 +53,7 @@ public class Controller {
         createListeners();
     }
 
-    private void settingsButtonPressed(){
+    private void settingsButtonPressed() {
         isVisible = !isVisible;
         if (isVisible) {
             window.remove(settingsPanel);
@@ -153,48 +155,67 @@ public class Controller {
         });
         runAllButton.addActionListener(e -> startAll());
 
-        AutoClick.addSwingWorkerListener(e -> {
-            isClicking = false;
-            ACButton.setText("Start Auto Clicker (F1)");
-            intervalACTextField.setFocusable(true);
+        AutoClick.addSwingWorkerListener(new SwingWorkerListener() {
+            @Override
+            public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
+                ACButton.setText("Start Auto Clicker (F1)");
+                isClicking = false;
+                intervalACTextField.setFocusable(true);
+            }
+
+            @Override
+            public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
+                ACButton.setText("Stop Auto Clicker (F2)");
+                intervalACTextField.setFocusable(false);
+            }
         });
 
-        KeyPress.addSwingWorkerListener(e -> {
-            isPressing = false;
-            KPButton.setText("Start Key Press");
-            intervalKPTextField.setFocusable(true);
-            keyPressTextField.setFocusable(true);
+        KeyPress.addSwingWorkerListener(new SwingWorkerListener() {
+            @Override
+            public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
+                KPButton.setText("Start Key Press");
+                isPressing = false;
+                setFocusable();
+            }
+
+            @Override
+            public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
+                KPButton.setText("Stop Key Press");
+                setFocusable();
+            }
         });
     }
 
-    private void keyPressConditions() {
-        isPressing = !isPressing;
-
-        if (isPressing) {
-            KPButton.setText("Stop Key Press");
-            int KeyCode = (java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
-            keyPress.start(KeyCode,isPressing, getInterval(intervalKPTextField), maxFunctions);
-        } else {
-            keyPress.worker.cancel(true);
-            KPButton.setText("Start Key Press");
-        }
+    private void setFocusable() {
         intervalKPTextField.setFocusable(!isPressing);
         keyPressTextField.setFocusable(!isPressing);
     }
 
-    private void clickConditions() {
-
-        isClicking = !isClicking;
-        if (autoClick.worker == null || autoClick.worker.isDone()) {
-            ACButton.setText("Stop Auto Clicker (F2)");
-            intervalACTextField.setFocusable(false);
-            autoClick.start(isClicking, getInterval(intervalACTextField), maxFunctions);
+    private void keyPressConditions() {
+        isPressing = !isPressing;
+        if (keyPress.getWorker() == null || keyPress.getWorker().isDone()) {
+            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
+            keyPress.start(getInterval(intervalKPTextField), maxFunctions);
         } else {
-            autoClick.worker.cancel(true);
-            ACButton.setText("Start Auto Clicker (F1)");
-            intervalACTextField.setFocusable(true);
+            keyPress.getWorker().cancel(true);
         }
+    }
 
+    private void doFunction(AutoFunction function, int interval, int maxFunctions){
+        if (function.getWorker() == null || function.getWorker().isDone()) {
+            function.start(interval, maxFunctions);
+        } else {
+            function.getWorker().cancel(true);
+        }
+    }
+
+    private void clickConditions() {
+        isClicking = !isClicking;
+        if (autoClick.getWorker() == null || autoClick.getWorker().isDone()) {
+            autoClick.start(getInterval(intervalACTextField), maxFunctions);
+        } else {
+            autoClick.getWorker().cancel(true);
+        }
     }
 
     private int getInterval(JTextField field) {
