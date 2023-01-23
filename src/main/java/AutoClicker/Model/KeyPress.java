@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class KeyPress implements AutoFunction {
-    private static ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
+    private static final ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
     private SwingWorker<Void, Void> worker;
     private int interval;
     private int keyCode;

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="794.0">
+         <top>
+            <HBox prefHeight="46.0" prefWidth="794.0" style="-fx-background-color: #122128;" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <VBox prefHeight="320.0" prefWidth="794.0" style="-fx-background-color: #1F2C35;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="54.0" prefWidth="794.0" spacing="10.0">
+                     <children>
+                        <Label id="clickLabel" alignment="CENTER" prefHeight="14.0" prefWidth="115.0" text="Click:" textAlignment="CENTER" textFill="#ffec1f">
+                           <font>
+                              <Font name="Constantia Bold" size="23.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10.0">
+                           <children>
+                              <TextField id="clickInterval" promptText="Interval" style="-fx-background-color: #4C565D;">
+                                 <font>
+                                    <Font name="Constantia" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox id="clickCheckMax" mnemonicParsing="false" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
+                                 <font>
+                                    <Font name="Constantia Bold" size="12.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField id="clickMax" disable="true" promptText="Maximum Clicks" style="-fx-background-color: #4C565D;" />
+                              <Button id="clickStartButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Clicker (F1)" textFill="#ffec1f">
+                                 <font>
+                                    <Font name="Constantia Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" style="-fx-background-color: #4C565D;" text="Create New" textFill="#ffec1f" translateX="50.0" translateY="-10.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <VBox prefHeight="320.0" prefWidth="794.0" style="-fx-background-color: #1F2C35;">
+                     <children>
+                        <HBox prefHeight="54.0" prefWidth="794.0" spacing="10.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="28.0" prefWidth="115.0" text="Press:" textAlignment="CENTER" textFill="#ffec1f">
+                                 <font>
+                                    <Font name="Constantia Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <TextField prefHeight="22.0" prefWidth="58.0" promptText="Key Press" style="-fx-background-color: #4C565D;">
+                                       <font>
+                                          <Font name="Constantia" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField prefHeight="22.0" prefWidth="92.0" promptText="Interval" style="-fx-background-color: #4C565D;">
+                                       <font>
+                                          <Font name="Constantia" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <CheckBox mnemonicParsing="false" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
+                                       <font>
+                                          <Font name="Constantia Bold" size="12.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <TextField disable="true" promptText="Maximum Presses" style="-fx-background-color: #4C565D;" />
+                                    <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Key Press" textFill="#ffec1f">
+                                       <font>
+                                          <Font name="Constantia Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" style="-fx-background-color: #4C565D;" text="Create New" textFill="#ffec1f" translateX="50.0" translateY="-10.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
