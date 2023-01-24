@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
