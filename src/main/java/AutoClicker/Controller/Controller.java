@@ -68,7 +68,10 @@ public class Controller implements Initializable {
         addFormatter(pressInterval);
 
         clickStartButton.setOnAction(e -> doFunction(autoClick, getInterval(clickInterval), maxFunctions));
-        PressStartButton.setOnAction(e -> doFunction(keyPress, getInterval(pressInterval), maxFunctions));
+        PressStartButton.setOnAction(e -> {
+            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
+            doFunction(keyPress, getInterval(pressInterval), maxFunctions);
+        });
 
         pressKey.setOnKeyPressed(keyEvent -> {
             PressStartButton.setDisable(false);
@@ -76,9 +79,6 @@ public class Controller implements Initializable {
                 PressStartButton.setDisable(true);
             } else if (pressKey.getText().length() > 0) {
                 pressKey.setText("");
-            }
-            else  {
-                keyPress.setKeyCode(keyEvent.getText().charAt(0));
             }
 
         });
@@ -141,7 +141,7 @@ public class Controller implements Initializable {
 
     }
 
-    private void addFormatter( TextField intervalField){
+    private void addFormatter(TextField intervalField) {
         UnaryOperator<TextFormatter.Change> filter = change -> change.getText().matches("[0-9]*") ? change : null;
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         intervalField.setTextFormatter(textFormatter);
