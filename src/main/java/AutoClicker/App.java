@@ -1,18 +1,30 @@
 package AutoClicker;
 
-import AutoClicker.Controller.Controller;
-import AutoClicker.Model.AutoClick;
-import AutoClicker.Model.KeyPress;
-import AutoClicker.View.GUI;
-import org.jnativehook.NativeHookException;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class App {
+import java.util.Objects;
 
-    public static void main(String[] args) throws NativeHookException {
-        GUI myGUI = new GUI();
-        AutoClick myAutoClick = new AutoClick();
-        KeyPress keyPress = new KeyPress();
-        new Controller(myAutoClick, myGUI, keyPress);
+public class App extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+
     }
-
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scenebuilder.fxml")));
+        Scene scene = new Scene(root);
+        stage.setTitle("AutoClicker");
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
 }

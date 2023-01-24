@@ -1,146 +1,131 @@
 package AutoClicker.Controller;
 
-import AutoClicker.Model.AutoClick;
-import AutoClicker.Model.AutoFunction;
-import AutoClicker.Model.KeyPress;
-import AutoClicker.Model.SwingWorkerListener;
-import AutoClicker.View.GUI;
+import AutoClicker.Model.*;
+import javafx.application.Platform;
+import javafx.fxml.*;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 
-public class Controller {
-
-    private final AutoClick autoClick;
-    private final KeyPress keyPress;
-    private final JButton ACButton;
-    private final JTextField intervalACTextField;
-    private final JButton KPButton;
-    private final JTextField intervalKPTextField;
-    private final JTextField keyPressTextField;
-    private final JButton settingsButton;
-    private final JButton runAllButton;
-    private final JPanel functionsPanel;
-    private final JPanel settingsPanel;
-    private final JFrame window;
+public class Controller implements Initializable {
+    private KeyPress keyPress;
     private boolean isClicking = false;
     private boolean isPressing = false;
-    ///private boolean pressAll = false;
-    private boolean isVisible = true;
     private int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
 
 
-    public Controller(AutoClick autoClick, GUI gui, KeyPress keyPress) throws NativeHookException {
-        this.autoClick = autoClick;
-        this.keyPress = keyPress;
-        window = gui.getWindow();
-        functionsPanel = gui.getFunctionsPanel();
-        settingsPanel = gui.getSettingsPanel();
-        ACButton = gui.getACButton();
-        intervalACTextField = gui.getIntervalACTextField();
-        intervalKPTextField = gui.getIntervalKPTextField();
-        keyPressTextField = gui.getKeyPressTextField();
-        KPButton = gui.getKPButton();
-        settingsButton = gui.getSettingsButton();
-        runAllButton = gui.getRunAllButton();
-        createListeners();
-    }
+    @FXML
+    private Button clickStartButton;
+    @FXML
+    private TextField clickInterval;
+    @FXML
+    private CheckBox clickCheckMax;
+    @FXML
+    private AnchorPane mainPanel;
+    @FXML
+    private Label clickLabel;
+    @FXML
+    private TextField clickMax;
+    @FXML
+    private TextField pressInterval;
+    @FXML
+    private TextField pressKey;
+    @FXML
+    private CheckBox pressCheckMax;
+    @FXML
+    private TextField pressMax;
+    @FXML
+    private Button PressStartButton;
+    @FXML
+    private Button pressGeneratorButton;
+    @FXML
+    private Label pressLabel;
+    @FXML
+    private Button clickGeneratorButton;
 
-    private void settingsButtonPressed() {
-        isVisible = !isVisible;
-        if (isVisible) {
-            window.remove(settingsPanel);
-            window.add(functionsPanel, BorderLayout.CENTER);
-        } else {
-            window.remove(functionsPanel);
-            window.add(settingsPanel, BorderLayout.CENTER);
+    private AutoClick autoClick;
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        autoClick = new AutoClick();
+        keyPress = new KeyPress();
+        PressStartButton.setDisable(true);
+        clickInterval.setText("1000");
+        pressInterval.setText("1000");
+
+        addFormatter(clickInterval);
+        addFormatter(pressInterval);
+
+        clickStartButton.setOnAction(e -> doFunction(autoClick, getInterval(clickInterval), maxFunctions));
+        PressStartButton.setOnAction(e -> {
+            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
+            doFunction(keyPress, getInterval(pressInterval), maxFunctions);
+        });
+
+        pressKey.setOnKeyPressed(keyEvent -> {
+            PressStartButton.setDisable(false);
+            if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+                PressStartButton.setDisable(true);
+            } else if (pressKey.getText().length() > 0) {
+                pressKey.setText("");
+            }
+
+        });
+
+        AutoClick.addSwingWorkerListener(new SwingWorkerListener() {
+            @Override
+            public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
+                Platform.runLater(() -> clickStartButton.setText("Start Clicker (F1)"));
+                isClicking = false;
+                clickInterval.setEditable(true);
+            }
+
+            @Override
+            public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
+                Platform.runLater(() -> clickStartButton.setText("Stop Clicker (F2)"));
+                isClicking = true;
+                clickInterval.setEditable(false);
+            }
+        });
+
+        KeyPress.addSwingWorkerListener(new SwingWorkerListener() {
+            @Override
+            public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
+                Platform.runLater(() -> PressStartButton.setText("Start Key Press"));
+                isPressing = false;
+                setFocusable();
+            }
+
+            @Override
+            public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
+                Platform.runLater(() -> PressStartButton.setText("Stop Key Press"));
+                isPressing = true;
+                setFocusable();
+            }
+        });
+
+        try {
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException e) {
+            throw new RuntimeException(e);
         }
-        window.repaint();
-        if (isClicking) {
-            doFunction(autoClick, getInterval(intervalACTextField), maxFunctions);
-        }
-        if (isPressing) {
-            doFunction(keyPress, getInterval(intervalKPTextField), maxFunctions);
-        }
-    }
-
-    private void createListeners() throws NativeHookException {
-        settingsButton.addActionListener(e -> settingsButtonPressed());
-
-        KPButton.addActionListener(e -> {
-            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyPressTextField.getText().charAt(0)));
-            doFunction(keyPress, getInterval(intervalKPTextField), maxFunctions);
-        });
-
-        intervalKPTextField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        keyPressTextField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                KPButton.setEnabled(true);
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    KPButton.setEnabled(false);
-                } else if (keyPressTextField.getText().length() > 0) {
-                    keyPressTextField.setText("");
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        intervalACTextField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        ACButton.addActionListener(e -> doFunction(autoClick, getInterval(intervalACTextField), maxFunctions));
-        GlobalScreen.registerNativeHook();
         GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyPressed(NativeKeyEvent e) {
                 if (e.getKeyCode() == NativeKeyEvent.VC_F1 && !isClicking) {
-                    doFunction(autoClick, getInterval(intervalACTextField), maxFunctions);
+                    doFunction(autoClick, getInterval(clickInterval), maxFunctions);
                 } else if (e.getKeyCode() == NativeKeyEvent.VC_F2 && isClicking) {
-                    doFunction(autoClick, getInterval(intervalACTextField), maxFunctions);
+                    doFunction(autoClick, getInterval(clickInterval), maxFunctions);
                 }
             }
 
@@ -152,44 +137,18 @@ public class Controller {
             public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
             }
         });
-        runAllButton.addActionListener(e -> startAll());
 
-        AutoClick.addSwingWorkerListener(new SwingWorkerListener() {
-            @Override
-            public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
-                ACButton.setText("Start Auto Clicker (F1)");
-                isClicking = false;
-                intervalACTextField.setFocusable(true);
-            }
+    }
 
-            @Override
-            public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
-                ACButton.setText("Stop Auto Clicker (F2)");
-                isClicking = true;
-                intervalACTextField.setFocusable(false);
-            }
-        });
-
-        KeyPress.addSwingWorkerListener(new SwingWorkerListener() {
-            @Override
-            public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
-                KPButton.setText("Start Key Press");
-                isPressing = false;
-                setFocusable();
-            }
-
-            @Override
-            public void onSwingWorkerStart(SwingWorker<?, ?> worker) {
-                KPButton.setText("Stop Key Press");
-                isPressing = true;
-                setFocusable();
-            }
-        });
+    private void addFormatter(TextField intervalField) {
+        UnaryOperator<TextFormatter.Change> filter = change -> change.getText().matches("[0-9]*") ? change : null;
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        intervalField.setTextFormatter(textFormatter);
     }
 
     private void setFocusable() {
-        intervalKPTextField.setFocusable(!isPressing);
-        keyPressTextField.setFocusable(!isPressing);
+        pressInterval.setEditable(!isPressing);
+        pressKey.setEditable(!isPressing);
     }
 
     private void doFunction(AutoFunction function, int interval, int maxFunctions) {
@@ -200,7 +159,7 @@ public class Controller {
         }
     }
 
-    private int getInterval(JTextField field) {
+    private int getInterval(TextField field) {
         int interval;
         try {
             interval = Integer.parseInt(field.getText());
@@ -236,5 +195,4 @@ public class Controller {
 //            runAllButton.setText("Start All Functions");
 //        }
     }
-
 }

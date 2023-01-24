@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AutoClicker.Controller.Controller">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="794.0">
          <top>
@@ -23,30 +22,33 @@
                <children>
                   <HBox prefHeight="54.0" prefWidth="794.0" spacing="10.0">
                      <children>
-                        <Label id="clickLabel" alignment="CENTER" prefHeight="14.0" prefWidth="115.0" text="Click:" textAlignment="CENTER" textFill="#ffec1f">
+                        <Label fx:id="clickLabel" alignment="CENTER" prefHeight="14.0" prefWidth="115.0" text="Click:" textAlignment="CENTER" textFill="#ffec1f">
                            <font>
                               <Font name="Constantia Bold" size="23.0" />
                            </font>
                         </Label>
                         <HBox spacing="10.0">
                            <children>
-                              <TextField id="clickInterval" promptText="Interval" style="-fx-background-color: #4C565D;">
+                              <TextField fx:id="clickInterval" prefHeight="28.0" prefWidth="162.0" promptText="Interval" style="-fx-background-color: #4C565D;">
                                  <font>
-                                    <Font name="Constantia" size="12.0" />
+                                    <Font name="Constantia" size="14.0" />
                                  </font>
                               </TextField>
-                              <CheckBox id="clickCheckMax" mnemonicParsing="false" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
+                              <CheckBox fx:id="clickCheckMax" mnemonicParsing="false" prefHeight="18.0" prefWidth="102.0" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
                                  <font>
                                     <Font name="Constantia Bold" size="12.0" />
                                  </font>
                               </CheckBox>
-                              <TextField id="clickMax" disable="true" promptText="Maximum Clicks" style="-fx-background-color: #4C565D;" />
-                              <Button id="clickStartButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Clicker (F1)" textFill="#ffec1f">
+                              <TextField fx:id="clickMax" disable="true" prefHeight="28.0" prefWidth="174.0" promptText="Maximum Clicks" style="-fx-background-color: #4C565D;">
+                                 <font>
+                                    <Font name="Constantia" size="14.0" />
+                                 </font></TextField>
+                              <Button fx:id="clickStartButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Clicker (F1)" textFill="#ffec1f">
                                  <font>
                                     <Font name="Constantia Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" style="-fx-background-color: #4C565D;" text="Create New" textFill="#ffec1f" translateX="50.0" translateY="-10.0" />
+                              <Button fx:id="clickGeneratorButton" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" style="-fx-background-color: #4C565D;" text="Create New" textFill="#ffec1f" translateX="20.0" translateY="-10.0" />
                            </children>
                         </HBox>
                      </children>
@@ -58,35 +60,38 @@
                      <children>
                         <HBox prefHeight="54.0" prefWidth="794.0" spacing="10.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="28.0" prefWidth="115.0" text="Press:" textAlignment="CENTER" textFill="#ffec1f">
+                              <Label fx:id="pressLabel" alignment="CENTER" prefHeight="28.0" prefWidth="115.0" text="Press:" textAlignment="CENTER" textFill="#ffec1f">
                                  <font>
                                     <Font name="Constantia Bold" size="23.0" />
                                  </font>
                               </Label>
                               <HBox spacing="10.0">
                                  <children>
-                                    <TextField prefHeight="22.0" prefWidth="58.0" promptText="Key Press" style="-fx-background-color: #4C565D;">
+                                    <TextField fx:id="pressKey" prefHeight="28.0" prefWidth="78.0" promptText="Key Press" style="-fx-background-color: #4C565D;">
                                        <font>
-                                          <Font name="Constantia" size="12.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField prefHeight="22.0" prefWidth="92.0" promptText="Interval" style="-fx-background-color: #4C565D;">
+                                    <TextField fx:id="pressInterval" prefHeight="28.0" prefWidth="75.0" promptText="Interval" style="-fx-background-color: #4C565D;">
                                        <font>
-                                          <Font name="Constantia" size="12.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </TextField>
-                                    <CheckBox mnemonicParsing="false" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
+                                    <CheckBox fx:id="pressCheckMax" mnemonicParsing="false" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
                                        <font>
                                           <Font name="Constantia Bold" size="12.0" />
                                        </font>
                                     </CheckBox>
-                                    <TextField disable="true" promptText="Maximum Presses" style="-fx-background-color: #4C565D;" />
-                                    <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Key Press" textFill="#ffec1f">
+                                    <TextField fx:id="pressMax" disable="true" promptText="Maximum Presses" style="-fx-background-color: #4C565D;">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></TextField>
+                                    <Button fx:id="PressStartButton" mnemonicParsing="false" prefHeight="29.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Key Press" textFill="#ffec1f">
                                        <font>
                                           <Font name="Constantia Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" style="-fx-background-color: #4C565D;" text="Create New" textFill="#ffec1f" translateX="50.0" translateY="-10.0" />
+                                    <Button fx:id="pressGeneratorButton" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" style="-fx-background-color: #4C565D;" text="Create New" textFill="#ffec1f" translateX="21.0" translateY="-10.0" />
                                  </children>
                               </HBox>
                            </children>
