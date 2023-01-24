@@ -68,9 +68,7 @@ public class Controller implements Initializable {
         addFormatter(pressInterval);
 
         clickStartButton.setOnAction(e -> doFunction(autoClick, getInterval(clickInterval), maxFunctions));
-        PressStartButton.setOnAction(e -> {
-            doFunction(keyPress, getInterval(pressInterval), maxFunctions);
-        });
+        PressStartButton.setOnAction(e -> doFunction(keyPress, getInterval(pressInterval), maxFunctions));
 
         pressKey.setOnKeyPressed(keyEvent -> {
             PressStartButton.setDisable(false);
