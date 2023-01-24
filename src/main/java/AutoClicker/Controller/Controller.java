@@ -22,7 +22,7 @@ public class Controller implements Initializable {
     private KeyPress keyPress;
     private boolean isClicking = false;
     private boolean isPressing = false;
-    private int maxFunctions = 7200; // temporary value, another object needs to be added to the GUI and then that value can be read and passed here (7200 is an hour of clicks at the fastest speed of 500ms)
+    private static final int maxFunctions = 999999999; // this will run for almost 8 years if set to the fastest interval (basically infinite for our purposes)
 
 
     @FXML
