@@ -76,33 +76,38 @@ public class Controller implements Initializable {
             pressMax.setDisable(!pressCheckMax.isSelected());
         });
 
-        clickStartButton.setOnAction(e ->{
-            if ( !clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
+        clickStartButton.setOnAction(e -> {
+            if (!clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
                 doFunction(autoClick, getInterval(clickInterval), maxFunctions);
-            }
-            else{
-                doFunction(autoClick, getInterval(clickInterval),Integer.parseInt(clickMax.getText()));
+            } else {
+                doFunction(autoClick, getInterval(clickInterval), Integer.parseInt(clickMax.getText()));
             }
 
         });
         PressStartButton.setOnAction(e -> {
             keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
-            if ( !pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
+            if (!pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
                 doFunction(keyPress, getInterval(pressInterval), maxFunctions);
-            }
-            else{
-            doFunction(keyPress, getInterval(pressInterval), Integer.parseInt(pressMax.getText()));
+            } else {
+                doFunction(keyPress, getInterval(pressInterval), Integer.parseInt(pressMax.getText()));
             }
         });
 
         pressKey.setOnKeyPressed(keyEvent -> {
-            PressStartButton.setDisable(false);
-            if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+            if (keyEvent.getCode().isDigitKey() || keyEvent.getCode().isLetterKey() || keyEvent.getCode() == KeyCode.SPACE) {
+                PressStartButton.setDisable(false);
+                if (pressKey.getText().length() > 0) {
+                    pressKey.setText("");
+                }
+                if (keyEvent.getCode() == KeyCode.SPACE) {
+                    pressKey.setText("[SPACE]");
+                }
+            } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
                 PressStartButton.setDisable(true);
-            } else if (pressKey.getText().length() > 0) {
-                pressKey.setText("");
+                if (keyEvent.getCode() != KeyCode.BACK_SPACE) {
+                    keyEvent.consume();
+                }
             }
-
         });
 
         AutoClick.addSwingWorkerListener(new SwingWorkerListener() {
@@ -112,7 +117,7 @@ public class Controller implements Initializable {
                 isClicking = false;
                 clickInterval.setDisable(false);
                 clickCheckMax.setDisable(false);
-                if(clickCheckMax.isSelected()) {
+                if (clickCheckMax.isSelected()) {
                     clickMax.setDisable(false);
                 }
             }
@@ -179,7 +184,7 @@ public class Controller implements Initializable {
         pressInterval.setDisable(isPressing);
         pressKey.setDisable(isPressing);
         pressCheckMax.setDisable(isPressing);
-        if(pressCheckMax.isSelected()) {
+        if (pressCheckMax.isSelected()) {
             pressMax.setDisable(isPressing);
         }
     }
