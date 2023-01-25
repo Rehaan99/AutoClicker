@@ -104,9 +104,6 @@ public class Controller implements Initializable {
                 }
             } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
                 PressStartButton.setDisable(true);
-                if (keyEvent.getCode() != KeyCode.BACK_SPACE) {
-                    keyEvent.consume();
-                }
             }
         });
 

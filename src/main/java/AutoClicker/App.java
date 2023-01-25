@@ -21,6 +21,7 @@ public class App extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("AutoClicker");
         stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
         stage.show();
         stage.setOnCloseRequest(event -> {
             Platform.exit();
