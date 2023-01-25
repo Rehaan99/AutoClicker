@@ -69,19 +69,11 @@ public class Controller implements Initializable {
         addFormatter(pressMax);
 
         clickCheckMax.setOnAction(actionEvent -> {
-            if (clickCheckMax.isSelected()) {
-                clickMax.setDisable(false);
-            }else{
-                clickMax.setDisable(true);
-            }
+            clickMax.setDisable(!clickCheckMax.isSelected());
         });
 
         pressCheckMax.setOnAction(actionEvent -> {
-            if (pressCheckMax.isSelected()) {
-                pressMax.setDisable(false);
-            }else{
-                pressMax.setDisable(true);
-            }
+            pressMax.setDisable(!pressCheckMax.isSelected());
         });
 
         clickStartButton.setOnAction(e ->{
@@ -94,11 +86,11 @@ public class Controller implements Initializable {
 
         });
         PressStartButton.setOnAction(e -> {
+            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
             if ( !pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
                 doFunction(keyPress, getInterval(pressInterval), maxFunctions);
             }
             else{
-            keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
             doFunction(keyPress, getInterval(pressInterval), Integer.parseInt(pressMax.getText()));
             }
         });
