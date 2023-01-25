@@ -3,6 +3,10 @@ package AutoClicker.Model;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class KeyPress implements AutoFunction {
     private static final ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
@@ -61,11 +65,26 @@ public class KeyPress implements AutoFunction {
     private void automation() throws InterruptedException, AWTException {
         Robot bot = new Robot();
         int numberOfPresses = 0;
-        while (numberOfPresses < maxPresses || maxPresses == 0) {
+        Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+        while (numberOfPresses < maxPresses) {
             numberOfPresses++;
-            Thread.sleep(interval);
+            lock.lock();
+            try {
+                condition.await(interval, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
             bot.keyPress(keyCode);
-            Thread.sleep(200);
+            try {
+                condition.await(200, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
             bot.keyRelease(keyCode);
             if (interval == baseInterval) {
                 interval -= 200;

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.*;
 
 public class AutoClick implements AutoFunction {
     private static final ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
@@ -50,13 +53,23 @@ public class AutoClick implements AutoFunction {
     private void function() throws AWTException, InterruptedException {
         Robot bot = new Robot();
         int numberOfClicks = 0;
-        while (numberOfClicks < maxClicks || maxClicks == 0) {
+        Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+        while(numberOfClicks < maxClicks) {
+        lock.lock();
+        try {
+            condition.await(interval, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
             numberOfClicks++;
-            Thread.sleep(interval);// After interval press and release on the mouse left click.
+            new Timer(String.valueOf(interval));// After interval press and release on the mouse left click.
             bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         }
-        worker.cancel(true);
+            worker.cancel(true);
     }
 
     public static void addSwingWorkerListener(SwingWorkerListener listener) {
