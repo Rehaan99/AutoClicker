@@ -94,15 +94,15 @@ public class Controller implements Initializable {
         });
 
         pressKey.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode().isDigitKey() || keyEvent.getCode().isLetterKey() ||keyEvent.getCode() == KeyCode.SPACE) {
+            if (keyEvent.getCode().isDigitKey() || keyEvent.getCode().isLetterKey() || keyEvent.getCode() == KeyCode.SPACE) {
                 PressStartButton.setDisable(false);
                 if (pressKey.getText().length() > 0) {
                     pressKey.setText("");
                 }
-                if(keyEvent.getCode() == KeyCode.SPACE) {
+                if (keyEvent.getCode() == KeyCode.SPACE) {
                     pressKey.setText("[SPACE]");
                 }
-            } else {
+            } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
                 PressStartButton.setDisable(true);
                 if (keyEvent.getCode() != KeyCode.BACK_SPACE) {
                     keyEvent.consume();
