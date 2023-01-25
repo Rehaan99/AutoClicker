@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.*;
 
 public class AutoClick implements AutoFunction {
     private static final ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
@@ -30,6 +27,7 @@ public class AutoClick implements AutoFunction {
             }
             @Override
             protected void done() {
+                timer.stop();
                 for (SwingWorkerListener listener : listeners) {
                     listener.onSwingWorkerDone(this);
                 }
@@ -49,27 +47,20 @@ public class AutoClick implements AutoFunction {
         createNewSwingWorker();
         worker.execute();
     }
-
+    private int numberOfClicks = 0;
+    Timer timer;
     private void function() throws AWTException, InterruptedException {
         Robot bot = new Robot();
-        int numberOfClicks = 0;
-        Lock lock = new ReentrantLock();
-        Condition condition = lock.newCondition();
-        while(numberOfClicks < maxClicks) {
-        lock.lock();
-        try {
-            condition.await(interval, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
+        timer = new Timer(interval, e -> {
             numberOfClicks++;
-            new Timer(String.valueOf(interval));// After interval press and release on the mouse left click.
+            if(numberOfClicks < maxClicks) {
             bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        }
-            worker.cancel(true);
+            }else {
+                worker.cancel(true);
+            }
+        });
+        timer.start();
     }
 
     public static void addSwingWorkerListener(SwingWorkerListener listener) {
