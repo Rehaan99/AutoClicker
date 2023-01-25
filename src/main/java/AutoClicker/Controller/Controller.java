@@ -19,6 +19,10 @@ import java.util.function.UnaryOperator;
 
 
 public class Controller implements Initializable {
+    @FXML
+    private Button clickerActiveOverlay;
+    @FXML
+    private Button PressActiveOverlay;
     private KeyPress keyPress;
     private boolean isClicking = false;
     private boolean isPressing = false;
