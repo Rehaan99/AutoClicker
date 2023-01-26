@@ -106,8 +106,9 @@ public class Controller implements Initializable {
                 if (keyEvent.getCode() == KeyCode.SPACE) {
                     pressKey.setText("[SPACE]");
                 }
-            } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+            } else {
                 PressStartButton.setDisable(true);
+                pressKey.setText("");
             }
         });
 
