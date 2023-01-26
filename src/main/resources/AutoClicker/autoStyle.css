@@ -1,0 +1,7 @@
+.text-field{
+    -fx-background-color: #4C565D;
+    -fx-prompt-text-fill: #ffec1f;
+    -fx-font-family: "Constantia Bold";
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffec1f;
+}

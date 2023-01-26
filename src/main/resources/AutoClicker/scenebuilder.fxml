@@ -29,9 +29,9 @@
                         </Label>
                         <HBox spacing="10.0">
                            <children>
-                              <TextField fx:id="clickInterval" prefHeight="28.0" prefWidth="162.0" promptText="Interval" style="-fx-background-color: #4C565D;">
+                              <TextField fx:id="clickInterval" prefHeight="28.0" prefWidth="162.0" promptText="Interval">
                                  <font>
-                                    <Font name="Constantia" size="14.0" />
+                                    <Font name="Constantia" size="12.0" />
                                  </font>
                               </TextField>
                               <CheckBox fx:id="clickCheckMax" mnemonicParsing="false" prefHeight="18.0" prefWidth="102.0" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
@@ -41,7 +41,7 @@
                               </CheckBox>
                               <TextField fx:id="clickMax" disable="true" prefHeight="28.0" prefWidth="174.0" promptText="Maximum Clicks" style="-fx-background-color: #4C565D;">
                                  <font>
-                                    <Font name="Constantia" size="14.0" />
+                                    <Font name="Constantia" size="12.0" />
                                  </font></TextField>
                               <Button fx:id="clickStartButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Clicker (F1)" textFill="#ffec1f">
                                  <font>
@@ -69,12 +69,12 @@
                                  <children>
                                     <TextField fx:id="pressKey" prefHeight="28.0" prefWidth="78.0" promptText="Key Press" style="-fx-background-color: #4C565D;">
                                        <font>
-                                          <Font name="Constantia" size="14.0" />
+                                          <Font name="Constantia" size="12.0" />
                                        </font>
                                     </TextField>
                                     <TextField fx:id="pressInterval" prefHeight="28.0" prefWidth="75.0" promptText="Interval" style="-fx-background-color: #4C565D;">
                                        <font>
-                                          <Font name="Constantia" size="14.0" />
+                                          <Font name="Constantia" size="12.0" />
                                        </font>
                                     </TextField>
                                     <CheckBox fx:id="pressCheckMax" mnemonicParsing="false" text="Set Maximum" textAlignment="CENTER" textFill="#ffec1f">
@@ -82,9 +82,9 @@
                                           <Font name="Constantia Bold" size="12.0" />
                                        </font>
                                     </CheckBox>
-                                    <TextField fx:id="pressMax" disable="true" promptText="Maximum Presses" style="-fx-background-color: #4C565D;">
+                                    <TextField fx:id="pressMax" disable="true" prefHeight="28.0" prefWidth="174.0" promptText="Maximum Presses" style="-fx-background-color: #4C565D;">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="12.0" />
                                        </font></TextField>
                                     <Button fx:id="PressStartButton" disable="true" mnemonicParsing="false" prefHeight="29.0" prefWidth="130.0" style="-fx-background-color: #4C565D;" text="Start Key Press" textFill="#ffec1f">
                                        <font>
