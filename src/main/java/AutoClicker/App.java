@@ -3,8 +3,10 @@ package AutoClicker;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -35,5 +37,8 @@ public class App extends Application {
         stage2.initStyle(StageStyle.UNDECORATED);
         stage2.setAlwaysOnTop(true);
         stage2.show();
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage2.setX(primaryScreenBounds.getWidth() - stage2.getWidth());
+        stage2.setY(primaryScreenBounds.getHeight() - stage2.getHeight());
     }
 }
