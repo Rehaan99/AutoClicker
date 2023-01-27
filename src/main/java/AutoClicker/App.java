@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
@@ -28,5 +29,11 @@ public class App extends Application {
             Platform.exit();
             System.exit(0);
         });
+        Scene scene2 = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("displayRunning.fxml"))));
+        Stage stage2 = new Stage();
+        stage2.setScene(scene2);
+        stage2.initStyle(StageStyle.UNDECORATED);
+        stage2.show();
+
     }
 }
