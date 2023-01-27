@@ -30,10 +30,11 @@ public class App extends Application {
             System.exit(0);
         });
         Scene scene2 = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("displayRunning.fxml"))));
+        scene2.getStylesheets().add(Objects.requireNonNull(getClass().getResource("overlay.css")).toExternalForm());
         Stage stage2 = new Stage();
         stage2.setScene(scene2);
         stage2.initStyle(StageStyle.UNDECORATED);
+        stage2.setAlwaysOnTop(true);
         stage2.show();
-
     }
 }
