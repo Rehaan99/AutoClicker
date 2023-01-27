@@ -18,21 +18,20 @@ public class App extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scenebuilder.fxml")));
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("autoStyle.css")).toExternalForm());
-        stage.setTitle("AutoClicker");
-        stage.setScene(scene);
+        Scene autoFunctions = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scenebuilder.fxml"))));
+        autoFunctions.getStylesheets().add(Objects.requireNonNull(getClass().getResource("autoStyle.css")).toExternalForm());
+        stage.setTitle("Super Cool Automatic Functions");
+        stage.setScene(autoFunctions);
         stage.setAlwaysOnTop(true);
         stage.show();
         stage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0);
         });
-        Scene scene2 = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("displayRunning.fxml"))));
-        scene2.getStylesheets().add(Objects.requireNonNull(getClass().getResource("overlay.css")).toExternalForm());
+        Scene overlay = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("displayRunning.fxml"))));
+        overlay.getStylesheets().add(Objects.requireNonNull(getClass().getResource("overlay.css")).toExternalForm());
         Stage stage2 = new Stage();
-        stage2.setScene(scene2);
+        stage2.setScene(overlay);
         stage2.initStyle(StageStyle.UNDECORATED);
         stage2.setAlwaysOnTop(true);
         stage2.show();
