@@ -33,8 +33,13 @@ public class App extends Application {
         Scene overlay = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("displayRunning.fxml"))));
         overlay.getStylesheets().add(Objects.requireNonNull(getClass().getResource("overlay.css")).toExternalForm());
         Stage stage2 = new Stage();
+        Stage stage3 = new Stage();
+        stage3.initStyle(StageStyle.UTILITY);
+        stage3.setOpacity(0.0f);
+        stage3.show();
+        stage2.initOwner(stage3);
         stage2.setScene(overlay);
-        stage2.initStyle(StageStyle.UNDECORATED);
+        stage2.initStyle(StageStyle.TRANSPARENT);
         stage2.setAlwaysOnTop(true);
         stage2.show();
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
