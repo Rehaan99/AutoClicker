@@ -9,7 +9,7 @@
       <VBox id="vbox" alignment="CENTER" prefHeight="52.0" prefWidth="101.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="clickerActiveOverlay" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Clicker Active" textAlignment="CENTER" />
-            <Button fx:id="PressActiveOverlay" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Presser Active" textAlignment="CENTER" />
+            <Button fx:id="PressActiveOverlay" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Presser Active" textAlignment="CENTER" />
          </children>
       </VBox>
    </children>

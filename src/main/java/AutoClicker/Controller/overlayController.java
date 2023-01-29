@@ -34,12 +34,13 @@ public class overlayController implements Observer, Initializable {
         switch (function) {
             case "click" -> {
                 isClicking = !isClicking;
-                updateButton(clickerActiveOverlay,isClicking);
+                updateButton(clickerActiveOverlay, isClicking);
             }
             case "press" -> {
                 isPressing = !isPressing;
-                updateButton(PressActiveOverlay,isPressing);
+                updateButton(PressActiveOverlay, isPressing);
             }
+            case "pressDisabled" -> PressActiveOverlay.setDisable(!PressActiveOverlay.isDisabled());
         }
     }
 
@@ -49,23 +50,23 @@ public class overlayController implements Observer, Initializable {
 
         clickerActiveOverlay.setOnAction(e -> {
             isClicking = !isClicking;
-            updateButton(clickerActiveOverlay,isClicking);
+            updateButton(clickerActiveOverlay, isClicking);
             notifyObservers("click");
         });
 
         PressActiveOverlay.setOnAction(e -> {
             isPressing = !isPressing;
-            updateButton(PressActiveOverlay,isPressing);
+            updateButton(PressActiveOverlay, isPressing);
             notifyObservers("press");
         });
     }
 
-    private void updateButton(Button button, boolean isFunctioning)
-    {
+    private void updateButton(Button button, boolean isFunctioning) {
         if (isFunctioning) {
             button.setStyle("-fx-background-color: green;");
         } else {
             button.setStyle("-fx-background-color: red;");
         }
 
-    }}
+    }
+}

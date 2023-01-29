@@ -136,7 +136,10 @@ public class Controller implements Initializable, Observer {
 
         pressKey.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().isDigitKey() || keyEvent.getCode().isLetterKey() || keyEvent.getCode() == KeyCode.SPACE) {
-                PressStartButton.setDisable(false);
+                if(PressStartButton.isDisabled()) {
+                    PressStartButton.setDisable(false);
+                    notifyObservers("pressDisabled");
+                }
                 if (pressKey.getText().length() > 0) {
                     pressKey.setText("");
                 }
@@ -144,7 +147,10 @@ public class Controller implements Initializable, Observer {
                     pressKey.setText("[SPACE]");
                 }
             } else {
-                PressStartButton.setDisable(true);
+                if(!PressStartButton.isDisabled()) {
+                    PressStartButton.setDisable(true);
+                    notifyObservers("pressDisabled");
+                }
                 pressKey.setText("");
             }
         });
