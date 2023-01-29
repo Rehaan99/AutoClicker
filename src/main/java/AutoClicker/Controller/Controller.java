@@ -105,13 +105,9 @@ public class Controller implements Initializable, Observer {
         addFormatter(clickMax);
         addFormatter(pressMax);
 
-        clickCheckMax.setOnAction(actionEvent -> {
-            clickMax.setDisable(!clickCheckMax.isSelected());
-        });
+        clickCheckMax.setOnAction(actionEvent -> clickMax.setDisable(!clickCheckMax.isSelected()));
 
-        pressCheckMax.setOnAction(actionEvent -> {
-            pressMax.setDisable(!pressCheckMax.isSelected());
-        });
+        pressCheckMax.setOnAction(actionEvent -> pressMax.setDisable(!pressCheckMax.isSelected()));
 
         addObserver(this);
 
