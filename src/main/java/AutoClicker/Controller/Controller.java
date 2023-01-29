@@ -13,16 +13,16 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 
-public class Controller implements Initializable {
-    @FXML
-    private Button clickerActiveOverlay;
-    @FXML
-    private Button PressActiveOverlay;
+public class Controller implements Initializable, Observer {
+
+    public static List<Observer> observerList = new ArrayList<>();
     private KeyPress keyPress;
     private boolean isClicking = false;
     private boolean isPressing = false;
@@ -60,6 +60,39 @@ public class Controller implements Initializable {
 
     private AutoClick autoClick;
 
+    public void addObserver(Observer observer) {
+        observerList.add(observer);
+    }
+
+    private void notifyObservers(String function) {
+        for (Observer observer : observerList) {
+            if(!observer.toString().contains("AutoClicker.Controller.Controller")) {
+                observer.update(function);
+            }
+        }
+    }
+
+    @Override
+    public void update(String function) {
+        switch (function) {
+            case "click" -> {
+                if (!clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
+                    doFunction(autoClick, getInterval(clickInterval), maxFunctions);
+                } else {
+                    doFunction(autoClick, getInterval(clickInterval), Integer.parseInt(clickMax.getText()));
+                }
+            }
+            case "press" -> {
+                keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
+                if (!pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
+                    doFunction(keyPress, getInterval(pressInterval), maxFunctions);
+                } else {
+                    doFunction(keyPress, getInterval(pressInterval), Integer.parseInt(pressMax.getText()));
+                }
+            }
+        }
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         autoClick = new AutoClick();
@@ -80,7 +113,10 @@ public class Controller implements Initializable {
             pressMax.setDisable(!pressCheckMax.isSelected());
         });
 
+        addObserver(this);
+
         clickStartButton.setOnAction(e -> {
+            notifyObservers("click");
             if (!clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
                 doFunction(autoClick, getInterval(clickInterval), maxFunctions);
             } else {
@@ -89,6 +125,7 @@ public class Controller implements Initializable {
 
         });
         PressStartButton.setOnAction(e -> {
+            notifyObservers("press");
             keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
             if (!pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
                 doFunction(keyPress, getInterval(pressInterval), maxFunctions);
@@ -99,7 +136,10 @@ public class Controller implements Initializable {
 
         pressKey.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().isDigitKey() || keyEvent.getCode().isLetterKey() || keyEvent.getCode() == KeyCode.SPACE) {
-                PressStartButton.setDisable(false);
+                if(PressStartButton.isDisabled()) {
+                    PressStartButton.setDisable(false);
+                    notifyObservers("pressDisabled");
+                }
                 if (pressKey.getText().length() > 0) {
                     pressKey.setText("");
                 }
@@ -107,7 +147,10 @@ public class Controller implements Initializable {
                     pressKey.setText("[SPACE]");
                 }
             } else {
-                PressStartButton.setDisable(true);
+                if(!PressStartButton.isDisabled()) {
+                    PressStartButton.setDisable(true);
+                    notifyObservers("pressDisabled");
+                }
                 pressKey.setText("");
             }
         });
@@ -215,24 +258,4 @@ public class Controller implements Initializable {
         return interval;
     }
 
-    private void startAll() {
-//        pressAll = !pressAll;
-//        if (pressAll) {
-//            if (!isPressing & keyPressTextField.getText().length() > 0) {
-//                keyPressConditions();
-//            }
-//            if (!isClicking) {
-//                clickConditions();
-//            }
-//            runAllButton.setText("Stop All Functions");
-//        } else {
-//            if (isPressing) {
-//                keyPressConditions();
-//            }
-//            if (isClicking) {
-//                clickConditions();
-//            }
-//            runAllButton.setText("Start All Functions");
-//        }
-    }
 }
