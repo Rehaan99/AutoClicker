@@ -20,13 +20,9 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 
-public class Controller implements Initializable {
+public class Controller implements Initializable, Observer {
 
-    private List<Observer> observerList = new ArrayList<>();
-    @FXML
-    private Button clickerActiveOverlay;
-    @FXML
-    private Button PressActiveOverlay;
+    public static List<Observer> observerList = new ArrayList<>();
     private KeyPress keyPress;
     private boolean isClicking = false;
     private boolean isPressing = false;
@@ -68,9 +64,32 @@ public class Controller implements Initializable {
         observerList.add(observer);
     }
 
-    private void notifyObservers(boolean event) {
+    private void notifyObservers(String function) {
         for (Observer observer : observerList) {
-            observer.update(event);
+            if(!observer.toString().contains("AutoClicker.Controller.Controller")) {
+                observer.update(function);
+            }
+        }
+    }
+
+    @Override
+    public void update(String function) {
+        switch (function) {
+            case "click" -> {
+                if (!clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
+                    doFunction(autoClick, getInterval(clickInterval), maxFunctions);
+                } else {
+                    doFunction(autoClick, getInterval(clickInterval), Integer.parseInt(clickMax.getText()));
+                }
+            }
+            case "press" -> {
+                keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
+                if (!pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
+                    doFunction(keyPress, getInterval(pressInterval), maxFunctions);
+                } else {
+                    doFunction(keyPress, getInterval(pressInterval), Integer.parseInt(pressMax.getText()));
+                }
+            }
         }
     }
 
@@ -94,8 +113,10 @@ public class Controller implements Initializable {
             pressMax.setDisable(!pressCheckMax.isSelected());
         });
 
+        addObserver(this);
+
         clickStartButton.setOnAction(e -> {
-            notifyObservers(true);
+            notifyObservers("click");
             if (!clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
                 doFunction(autoClick, getInterval(clickInterval), maxFunctions);
             } else {
@@ -104,6 +125,7 @@ public class Controller implements Initializable {
 
         });
         PressStartButton.setOnAction(e -> {
+            notifyObservers("press");
             keyPress.setKeyCode(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressKey.getText().charAt(0)));
             if (!pressCheckMax.isSelected() || Objects.equals(pressMax.getText(), "")) {
                 doFunction(keyPress, getInterval(pressInterval), maxFunctions);
