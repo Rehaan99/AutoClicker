@@ -13,12 +13,16 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 
 public class Controller implements Initializable {
+
+    private List<Observer> observerList = new ArrayList<>();
     @FXML
     private Button clickerActiveOverlay;
     @FXML
@@ -60,6 +64,16 @@ public class Controller implements Initializable {
 
     private AutoClick autoClick;
 
+    public void addObserver(Observer observer) {
+        observerList.add(observer);
+    }
+
+    private void notifyObservers(boolean event) {
+        for (Observer observer : observerList) {
+            observer.update(event);
+        }
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         autoClick = new AutoClick();
@@ -81,6 +95,7 @@ public class Controller implements Initializable {
         });
 
         clickStartButton.setOnAction(e -> {
+            notifyObservers(true);
             if (!clickCheckMax.isSelected() || Objects.equals(clickMax.getText(), "")) {
                 doFunction(autoClick, getInterval(clickInterval), maxFunctions);
             } else {
