@@ -1,5 +1,6 @@
 .button {
-    -fx-background-color: rgba(255, 0, 0, 0.4);
+    -fx-background-color: red;
     -fx-font-family: "Constantia Bold";
+    -fx-font-color: black;
     -fx-font-size: 12px;
 }
