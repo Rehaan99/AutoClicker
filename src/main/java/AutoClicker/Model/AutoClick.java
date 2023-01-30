@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
 
+import static AutoClicker.Controller.Controller.observerList;
+
 public class AutoClick implements AutoFunction {
     private static final ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
     private SwingWorker<Void, Void> worker;
@@ -57,6 +59,15 @@ public class AutoClick implements AutoFunction {
             bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         }
         worker.cancel(true);
+        notifyObservers("click");
+    }
+
+    private void notifyObservers(String function) {
+        for (Observer observer : observerList) {
+            if(!observer.toString().contains("AutoClicker.Controller.Controller")) {
+                observer.update(function);
+            }
+        }
     }
 
     public static void addSwingWorkerListener(SwingWorkerListener listener) {
