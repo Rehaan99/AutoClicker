@@ -159,7 +159,7 @@ public class Controller implements Initializable, Observer {
             @Override
             public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
                 Platform.runLater(() -> clickStartButton.setText("Start Clicker (F1)"));
-                notifyObservers("click");
+
                 isClicking = false;
                 clickInterval.setDisable(false);
                 clickCheckMax.setDisable(false);
@@ -182,7 +182,6 @@ public class Controller implements Initializable, Observer {
             @Override
             public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
                 Platform.runLater(() -> PressStartButton.setText("Start Key Press"));
-                notifyObservers("press");
                 isPressing = false;
                 setFocusable();
             }
