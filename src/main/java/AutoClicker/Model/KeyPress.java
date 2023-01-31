@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static AutoClicker.Controller.Controller.observerList;
+
 public class KeyPress implements AutoFunction {
     private static final ArrayList<SwingWorkerListener> listeners = new ArrayList<>();
     private SwingWorker<Void, Void> worker;
@@ -72,5 +74,13 @@ public class KeyPress implements AutoFunction {
             }
         }
         worker.cancel(true);
+        notifyObservers("press");
+    }
+    private void notifyObservers(String function) {
+        for (Observer observer : observerList) {
+            if(!observer.toString().contains("AutoClicker.Controller.Controller")) {
+                observer.update(function);
+            }
+        }
     }
 }

@@ -155,6 +155,7 @@ public class Controller implements Initializable, Observer {
             @Override
             public void onSwingWorkerDone(SwingWorker<?, ?> worker) {
                 Platform.runLater(() -> clickStartButton.setText("Start Clicker (F1)"));
+
                 isClicking = false;
                 clickInterval.setDisable(false);
                 clickCheckMax.setDisable(false);
